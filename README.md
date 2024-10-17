@@ -4,24 +4,56 @@
 
 * Automate single-node deployment of Atlassian, with on-board resource monitoring and log collection
 
-#### Internals
+#### Internals / Edge cases
 
-* Storage: Atlantis recommends persistent volume for plan/deploy consistency -> local sc vs. rook/ceph
+* Storage: persistent volumes?
 
 #### Current Status
+```bash
+.
+├── assets
+│   └── cluster.drawio
+├── bin
+├── CHANGELOG.md
+├── env
+│   └── .env.template
+├── .gitignore
+├── helm
+│   └── atlantis
+│       └── values.yaml
+├── LICENSE.md
+├── Makefile
+├── .pre-commit-config.yaml
+├── README.md
+├── src
+│   ├── __init__.py
+│   ├── main.py
+│   ├── requirements.txt
+│   └── util
+│       └── install.py
+├── terraform
+│   ├── main.tf
+│   ├── outputs.tf
+│   └── variables.tf
+└── tmp
+```
 
 * Added Makefile ✅
 * Added Atlantis Helm Chart ✅
 * Added CLI tool to manage installation ✅
 
 TODO:
-* Automating cloudflared/ngrok 🔧
+* Expose cluster
+* Automate cloudflared/ngrok 🔧
+* Remove `helm` binary download -> Terraform Helm Provider 🔧
 
 For details, see [[CHANGELOG.md]]
 
 #### Future Improvements
 
-* See various inline `TODO` comments!
+* Add `terraform destroy` to CLI tool
+
+See various inline `# TODO:` comments!
 
 #### Building and Running
 
@@ -39,6 +71,10 @@ For details, see [[CHANGELOG.md]]
     ```bash
     make install
     ```
+
+#### Rollout
+
+Run `make clean` to delete execution environment and terraform states. Does not yet run `terraform destroy`.
 
 #### Versioning
 
