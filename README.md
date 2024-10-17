@@ -39,7 +39,7 @@
 * Added Makefile & Atlantis Helm Chart ✅
 * Added CLI tool to manage installation ✅
 
-For details, see [[CHANGELOG.md]]
+For details, see [CHANGELOG.md](CHANGELOG.md)
 
 ### 🧑‍🏭 Future Improvements
 
@@ -110,8 +110,8 @@ The above `make all` includes `make clean` which will reset your local repo and 
 
 ## Versioning
 
-This project uses [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) to generate an automated [[CHANGELOG.md]].
-SSPlease use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) when pushing.
+This project uses [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) to generate an automated [CHANGELOG.md](CHANGELOG.md).
+Please use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) when pushing.
 
 Commands:
 
