@@ -46,7 +46,7 @@ def version():
     Example:
         python main.py version
     """
-    click.echo("tf-atlantis-elk version: 1.1.0-alpha")
+    click.echo("tf-atlantis-elk version: 1.2.0-alpha")
 
 
 if __name__ == "__main__":
