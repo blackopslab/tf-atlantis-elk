@@ -6,6 +6,8 @@ from util.install import install as env_install
 def main():
     """Main entry point for the CLI tool."""
     click.echo("Welcome to the tf-atlantis-elk installation tool!")
+    click.echo("Use 'python main.py <command> --help' for more information.")
+    click.echo("")
 
 
 @main.command()
@@ -28,7 +30,7 @@ def install(envfile, verbose):
     match verbose:
         case True:
             click.echo("Verbose mode is enabled.")
-            click.echo(f"Installing packages from: {envfile}")
+            click.echo(f"Using .env file: {envfile}")
             click.echo(env_install(envfile))
 
         case False:

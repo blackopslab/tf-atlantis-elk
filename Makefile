@@ -1,10 +1,11 @@
 SHELL := /bin/bash
-.PHONY: help config install clean format alpha release
+.PHONY: help config install expose clean format alpha release
 
 help:
 	@echo "Makefile Commands:"
 	@echo "  config   - Set up the virtual environment."
 	@echo "  install  - Install the required Python packages."
+	@echo "  expose   - Exposes to the internet using cloudflared"
 	@echo "  clean    - Remove binary files."
 	@echo "  format   - Format Terraform files."
 	@echo "  alpha    - Generate changelog and create an alpha tag."
@@ -32,10 +33,15 @@ install:
 	else \
 		echo "Activating the virtual environment..."; \
 		source .venv/bin/activate; \
+		echo ""; \
 		echo "Installing Atlantis..."; \
 		python3 src/main.py install "env/.env" --verbose; \
+		echo "";
 	fi
 	@echo ""
+
+expose:
+	@./bin/cloudflared tunnel --url http://localhost:32141
 
 clean:
 	@echo "Cleaning up..."

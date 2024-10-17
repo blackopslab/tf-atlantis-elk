@@ -1,7 +1,8 @@
 import os, subprocess, shlex
 from typing import List, Tuple
 from dotenv import load_dotenv, dotenv_values
-from util.check_permissions_and_files import check_permissions_and_files
+
+# from util.check_permissions_and_files import check_permissions_and_files
 
 ### MAP COMMANDS ###
 
@@ -47,10 +48,6 @@ def _unload_env_file(envfile: str) -> None:
         os.environ.pop(key, None)
 
 
-def _add_helm_repo(repo_name: str, repo_url: str) -> None:
-    _run_command(f"bin/linux-amd64/helm repo add {repo_name} {repo_url}")
-
-
 def _run_terraform_init() -> None:
     _run_command(
         "../bin/terraform init \
@@ -91,13 +88,6 @@ def _map_binaries() -> List[Tuple[str, str, str, str, str]]:
             "755",
         ),
         (
-            "Helm",
-            "https://get.helm.sh/helm-v3.16.2-linux-amd64.tar.gz",
-            "./tmp/helm-v3.16.2-linux-amd64.tar.gz",
-            "./bin/",
-            "750",
-        ),
-        (
             "Cloudflared",
             "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64",
             "./bin/cloudflared",
@@ -107,8 +97,8 @@ def _map_binaries() -> List[Tuple[str, str, str, str, str]]:
     ]
 
 
-def _map_helm_repos() -> List[Tuple[str, str]]:
-    return [("Atlantis", "https://runatlantis.github.io/helm-charts")]
+# def _map_helm_repos() -> List[Tuple[str, str]]:
+#     return [("Atlantis", "https://runatlantis.github.io/helm-charts")]
 
 
 ### INSTALLATION SCRIPT ###
@@ -124,7 +114,7 @@ def install(envfile: str) -> str:
     # TODO flag to skip download
 
     BINARIES = _map_binaries()
-    REPOS = _map_helm_repos()
+    # REPOS = _map_helm_repos()
 
     # Ensure working directories have not been deleted
     print("Generating required directory tree...")
@@ -138,7 +128,6 @@ def install(envfile: str) -> str:
 
     # Download, extract and install binaries
     for name, url, temp_path, install_path, permissions in BINARIES:
-
         try:
             print(f"Downloading {name} binary...")
             _download_binary(url, temp_path)
@@ -159,42 +148,26 @@ def install(envfile: str) -> str:
             _set_permissions(install_path, permissions)
 
         except RuntimeError as e:
-            print(f"Error adding {name} repo: {e}")
+            print(f"Error downloading {name} binary: {e}")
             print(f"URL {url} does not respond!")
 
         except Exception as e:
-            print(f"Unexpected error adding {name} repo: {e}")
+            print(f"Unexpected error installing {name} binary: {e}")
 
     # TODO: fix compliance test
     # print("")
     # print("Running compliance tests...")
     # check_permissions_and_files("src/util/rules.json")
 
-    # DEPLOY ATLANTIS
-    print("")
-    for name, url in REPOS:
-
-        try:
-            print("Adding Atlantis helm repo...")
-            _add_helm_repo(name, url)
-
-        except RuntimeError as e:
-            print(f"Error adding {name} repo: {e}")
-            print(f"URL {url} does not respond!")
-
     try:
         print("")
-        print("2. POPULATING ENVIRONMENT...")
+        print("2. INSTALLING...")
 
         _load_env_file(envfile)
 
         _change_working_directory("./terraform/")
 
         _run_terraform_init()
-
-        # TODO: persistence
-
-        # TODO: namespace
 
         _run_terraform_plan()
 

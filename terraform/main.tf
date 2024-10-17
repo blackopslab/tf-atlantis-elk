@@ -1,5 +1,5 @@
 provider "kubernetes" {
-  config_path = "~/.kube/config"
+  config_path   = "~/.kube/config"
   config_context = ""
 }
 
@@ -14,7 +14,6 @@ resource "helm_release" "atlantis" {
   repository = "https://runatlantis.github.io/helm-charts"
   chart      = "atlantis"
   namespace  = "atlantis"
-  create_namespace = true
 
   values = [file("${path.module}/../helm/atlantis/values.yaml")]
 
@@ -33,3 +32,14 @@ resource "helm_release" "atlantis" {
     value = var.github_secret
   }
 }
+
+# # Null resource to run cloudflared command
+# resource "null_resource" "cloudflared_tunnel" {
+#   provisioner "local-exec" {
+#     command = "../bin/cloudflared tunnel --url http://localhost:34141"
+#   }
+
+#   triggers = {
+#     always_run = "${timestamp()}"
+#   }
+#}
