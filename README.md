@@ -2,7 +2,7 @@
 
 ## Goals
 
-* Automated single-node deployment of Atlassian, with on-board resource monitoring and log collection
+* Automated single-node deployment of Atlantis, with on-board resource monitoring and log collection
 
 ### 📋 Current Status
 ```bash
