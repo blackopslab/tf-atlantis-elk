@@ -27,6 +27,8 @@
 │   ├── requirements.txt
 │   └── util
 │       └── install.py
+│       └── scripts
+│           └── finalize_namespace.sh
 ├── terraform
 │   ├── main.tf
 │   ├── outputs.tf
@@ -44,8 +46,13 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 ### 🧑‍🏭 Future Improvements
 
 * `terraform destroy` -> not working correctly. Add graceful rollout with fix or workaround
-* Expose cluster via https instead of http i.e. manage letsencrypt
-
+* Deploy monitoring solution
+    * Prometheus ⚒️
+    * Opensearch ⚒️
+    * logstash ⚒️
+    * kibana ⚒️
+* The CLI tool currently downloads a local copy of the `terraform` binary.
+  This is probably useless: Atlantis will not be able to find it, unless it is permanently appended to $PATH -> remove.
 See various inline `# TODO:` comments!
 
 ## 🛠️ Building and Running
@@ -102,7 +109,7 @@ The above `make all` includes `make clean` which will reset your local repo and 
     ```
 3. Namespace deletion tends to hang at the `Terminating` phase. To quickly kill the process, you can run the following finalizer script:
     ```bash
-    src/scripts/finalize_namespace.sh
+    src/scripts/finalize_namespace.sh atlantis
     ```
    Please check that all related resources, especially `pvs` and `pvcs` have been successfully terminated. Please force delete manually where needed.
 
