@@ -2,7 +2,7 @@ import os, subprocess, shlex
 from typing import List, Tuple
 from dotenv import load_dotenv, dotenv_values
 
-# from util.check_permissions_and_files import check_permissions_and_files
+from util.check_permissions_and_files import check_permissions_and_files
 
 ### MAP COMMANDS ###
 
@@ -95,10 +95,6 @@ def _map_binaries() -> List[Tuple[str, str, str, str, str]]:
             "750",
         ),
     ]
-
-
-# def _map_helm_repos() -> List[Tuple[str, str]]:
-#     return [("Atlantis", "https://runatlantis.github.io/helm-charts")]
 
 
 ### INSTALLATION SCRIPT ###
