@@ -53,6 +53,7 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
     * kibana ⚒️
 * The CLI tool currently downloads a local copy of the `terraform` binary.
   This is probably useless: Atlantis will not be able to find it, unless it is permanently appended to $PATH -> remove.
+
 See various inline `# TODO:` comments!
 
 ## 🛠️ Building and Running
