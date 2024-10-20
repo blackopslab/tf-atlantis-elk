@@ -9,6 +9,12 @@ resource "kubernetes_namespace" "atlantis" {
   }
 }
 
+resource "kubernetes_namespace" "monitoring" {
+  metadata {
+    name = "monitoring"
+  }
+}
+
 resource "helm_release" "atlantis" {
   name       = "atlantis"
   repository = "https://runatlantis.github.io/helm-charts"
@@ -17,7 +23,7 @@ resource "helm_release" "atlantis" {
 
   values = [file("${path.module}/../helm/atlantis/values.yaml")]
 
-  set {
+    set {
     name  = "github.user"
     value = var.github_user
   }
@@ -33,13 +39,11 @@ resource "helm_release" "atlantis" {
   }
 }
 
-# # Null resource to run cloudflared command
-# resource "null_resource" "cloudflared_tunnel" {
-#   provisioner "local-exec" {
-#     command = "../bin/cloudflared tunnel --url http://localhost:34141"
-#   }
+resource "helm_release" "opensearch" {
+  name       = "opensearch"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "opensearch"
+  namespace  = "monitoring"
 
-#   triggers = {
-#     always_run = "${timestamp()}"
-#   }
-#}
+  values = [file("${path.module}/../helm/opensearch/values.yaml")]
+}

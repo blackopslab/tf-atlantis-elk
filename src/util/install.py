@@ -45,12 +45,14 @@ def _load_env_file(envfile: str) -> None:
 def _unload_env_file(envfile: str) -> None:
     env_vars = dotenv_values(envfile)
     for key in env_vars.keys():
-        os.environ.pop(key, None)
+        # KUBE_CONFIG_PATH is required by Atlantis/Terraform
+        if key != "KUBE_CONFIG_PATH":
+            os.environ.pop(key, None)
 
 
 def _run_terraform_init() -> None:
     _run_command(
-        "../bin/terraform init \
+        "terraform init \
                 -var 'github_user='{os.environ['GITHUB_USER']}'' \
                 -var 'github_token='{os.environ['GITHUB_TOKEN']}'' \
                 -var 'github_secret='{os.environ['GITHUB_SECRET']}''"
@@ -59,7 +61,7 @@ def _run_terraform_init() -> None:
 
 def _run_terraform_plan() -> None:
     _run_command(
-        f"../bin/terraform plan \
+        f"terraform plan \
                 -var 'github_user={os.environ['GITHUB_USER']}' \
                 -var 'github_token={os.environ['GITHUB_TOKEN']}' \
                 -var 'github_secret={os.environ['GITHUB_SECRET']}'"
@@ -68,7 +70,16 @@ def _run_terraform_plan() -> None:
 
 def _run_terraform_apply() -> None:
     _run_command(
-        f"../bin/terraform apply -auto-approve\
+        f"terraform apply -auto-approve\
+                -var 'github_user={os.environ['GITHUB_USER']}' \
+                -var 'github_token={os.environ['GITHUB_TOKEN']}' \
+                -var 'github_secret={os.environ['GITHUB_SECRET']}'"
+    )
+
+
+def _run_terraform_destroy() -> None:
+    _run_command(
+        f"terraform destroy -auto-approve\
                 -var 'github_user={os.environ['GITHUB_USER']}' \
                 -var 'github_token={os.environ['GITHUB_TOKEN']}' \
                 -var 'github_secret={os.environ['GITHUB_SECRET']}'"
@@ -81,13 +92,6 @@ def _run_terraform_apply() -> None:
 def _map_binaries() -> List[Tuple[str, str, str, str, str]]:
     return [
         (
-            "Terraform",
-            "https://releases.hashicorp.com/terraform/1.9.7/terraform_1.9.7_linux_amd64.zip",
-            "./tmp/terraform_1.9.7_linux_amd64.zip",
-            "./bin/",
-            "755",
-        ),
-        (
             "Cloudflared",
             "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64",
             "./bin/cloudflared",
@@ -97,8 +101,40 @@ def _map_binaries() -> List[Tuple[str, str, str, str, str]]:
     ]
 
 
-# def _map_helm_repos() -> List[Tuple[str, str]]:
-#     return [("Atlantis", "https://runatlantis.github.io/helm-charts")]
+def apply(envfile: str) -> str:
+
+    print("")
+    print("Creating all Terraform resources...")
+
+    _load_env_file(envfile)
+
+    _change_working_directory("./terraform/")
+
+    _run_terraform_apply()
+
+    # _unload_env_file(envfile)
+
+    _change_working_directory("../")
+
+    return "'terraform apply' completed successfully."
+
+
+def destroy(envfile: str) -> str:
+
+    print("")
+    print("Destroying all Terraform resources...")
+
+    _load_env_file(envfile)
+
+    _change_working_directory("./terraform/")
+
+    _run_terraform_destroy()
+
+    # _unload_env_file(envfile)
+
+    _change_working_directory("../")
+
+    return "'terraform destroy' completed successfully."
 
 
 ### INSTALLATION SCRIPT ###
@@ -173,9 +209,9 @@ def install(envfile: str) -> str:
 
         _run_terraform_apply()
 
-        _change_working_directory("../")
+        # _unload_env_file(envfile)
 
-        _unload_env_file(envfile)
+        _change_working_directory("../")
 
     except Exception as e:
         return f"Error during installation: {e}"

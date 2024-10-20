@@ -11,11 +11,11 @@ nameOverride: ""
 # -- An option to override the atlantis url,
 # if not using an ingress, set it to the external IP.
 # Check values.yaml for examples.
-atlantisUrl: ""
+atlantisUrl: "https://doc-subjects-unauthorized-hans.trycloudflare.com"
 # Example:  http://10.0.0.0
 
 # -- Replace this with your own repo allowlist.
-orgAllowlist: github.com/runatlantis/*
+orgAllowlist: github.com/blackopslab/*
 
 # -- Deprecated in favor of orgAllowlist.
 orgWhitelist: "<deprecated>"
