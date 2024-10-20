@@ -9,6 +9,12 @@ resource "kubernetes_namespace" "atlantis" {
   }
 }
 
+resource "kubernetes_namespace" "monitoring" {
+  metadata {
+    name = "monitoring"
+  }
+}
+
 resource "helm_release" "atlantis" {
   name       = "atlantis"
   repository = "https://runatlantis.github.io/helm-charts"
@@ -16,6 +22,14 @@ resource "helm_release" "atlantis" {
   namespace  = "atlantis"
 
   values = [file("${path.module}/../helm/atlantis/values.yaml")]
+
+resource "helm_release" "opensearch" {
+  name       = "atlantis"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "opensearch:1.3.11"
+  namespace  = "monitoring"
+
+  values = [file("${path.module}/../helm/opensearch/values.yaml")]
 
   set {
     name  = "github.user"
