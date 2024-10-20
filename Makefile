@@ -36,7 +36,7 @@ install:
 		echo ""; \
 		echo "Installing Atlantis..."; \
 		python3 src/main.py install "env/.env" --verbose; \
-		echo "";
+		echo ""; \
 	fi
 	@echo ""
 
