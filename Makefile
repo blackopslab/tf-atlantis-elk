@@ -28,28 +28,35 @@ config:
 	@echo ""
 
 install:
-	@if ! [ -d .venv ]; then \
-		echo "No virtual environment in .venv. Please run `make config`."; \
-	else \
-		echo "Activating the virtual environment..."; \
-		source .venv/bin/activate; \
-		echo ""; \
-		echo "Installing Atlantis..."; \
-		python3 src/main.py install "env/.env" --verbose; \
-		echo "";
-	fi
+	@echo "Activating the virtual environment..."
+	. .venv/bin/activate
+	@echo ""
+	@echo "TF-ATLANTIS-ELK CLI Tool"
+	@python3 src/main.py install "env/.env" --verbose
 	@echo ""
 
 expose:
 	@./bin/cloudflared tunnel --url http://localhost:32141
 
 clean:
+
 	@echo "Cleaning up..."
+	@helm list -n atlantis -q | while read -r release; do \
+  	namespace=$$(helm list --all-namespaces -o json | jq -r ".[] | select(.name == \"$release\") | .namespace"); \
+  	if [ -n "$$namespace" ]; then \
+    	helm uninstall "$$release" --namespace "$$namespace"; \
+  	fi; \
+	done
+	@kubectl delete ns atlantis &
+	@kubectl delete ns monitoring &
+	@bash src/scripts/finalize_namespace.sh monitoring
+	@bash src/scripts/finalize_namespace.sh atlantis
 	@rm -rf bin/*
 	@rm -rf tmp/*
 	@rm -rf .venv
 	@rm -rf terraform/.terraform*
 	@rm -rf terraform/*.tfstate*
+	@rm -rf *.tfstate*
 	@echo ""
 
 format:

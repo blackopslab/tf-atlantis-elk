@@ -50,7 +50,7 @@ def _unload_env_file(envfile: str) -> None:
 
 def _run_terraform_init() -> None:
     _run_command(
-        "../bin/terraform init \
+        "terraform init \
                 -var 'github_user='{os.environ['GITHUB_USER']}'' \
                 -var 'github_token='{os.environ['GITHUB_TOKEN']}'' \
                 -var 'github_secret='{os.environ['GITHUB_SECRET']}''"
@@ -59,7 +59,7 @@ def _run_terraform_init() -> None:
 
 def _run_terraform_plan() -> None:
     _run_command(
-        f"../bin/terraform plan \
+        f"terraform plan \
                 -var 'github_user={os.environ['GITHUB_USER']}' \
                 -var 'github_token={os.environ['GITHUB_TOKEN']}' \
                 -var 'github_secret={os.environ['GITHUB_SECRET']}'"
@@ -68,7 +68,7 @@ def _run_terraform_plan() -> None:
 
 def _run_terraform_apply() -> None:
     _run_command(
-        f"../bin/terraform apply -auto-approve\
+        f"terraform apply -auto-approve\
                 -var 'github_user={os.environ['GITHUB_USER']}' \
                 -var 'github_token={os.environ['GITHUB_TOKEN']}' \
                 -var 'github_secret={os.environ['GITHUB_SECRET']}'"
@@ -80,13 +80,6 @@ def _run_terraform_apply() -> None:
 
 def _map_binaries() -> List[Tuple[str, str, str, str, str]]:
     return [
-        (
-            "Terraform",
-            "https://releases.hashicorp.com/terraform/1.9.7/terraform_1.9.7_linux_amd64.zip",
-            "./tmp/terraform_1.9.7_linux_amd64.zip",
-            "./bin/",
-            "755",
-        ),
         (
             "Cloudflared",
             "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64",
@@ -173,9 +166,9 @@ def install(envfile: str) -> str:
 
         _run_terraform_apply()
 
-        _change_working_directory("../")
-
         _unload_env_file(envfile)
+
+        _change_working_directory("../")
 
     except Exception as e:
         return f"Error during installation: {e}"

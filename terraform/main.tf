@@ -23,15 +23,7 @@ resource "helm_release" "atlantis" {
 
   values = [file("${path.module}/../helm/atlantis/values.yaml")]
 
-resource "helm_release" "opensearch" {
-  name       = "atlantis"
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "opensearch:1.3.11"
-  namespace  = "monitoring"
-
-  values = [file("${path.module}/../helm/opensearch/values.yaml")]
-
-  set {
+    set {
     name  = "github.user"
     value = var.github_user
   }
@@ -47,13 +39,11 @@ resource "helm_release" "opensearch" {
   }
 }
 
-# # Null resource to run cloudflared command
-# resource "null_resource" "cloudflared_tunnel" {
-#   provisioner "local-exec" {
-#     command = "../bin/cloudflared tunnel --url http://localhost:34141"
-#   }
+resource "helm_release" "opensearch" {
+  name       = "opensearch"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "opensearch"
+  namespace  = "mon"
 
-#   triggers = {
-#     always_run = "${timestamp()}"
-#   }
-#}
+  values = [file("${path.module}/../helm/opensearch/values.yaml")]
+}
