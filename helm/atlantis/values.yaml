@@ -15,7 +15,7 @@ atlantisUrl: ""
 # Example:  http://10.0.0.0
 
 # -- Replace this with your own repo allowlist.
-orgAllowlist: github.com/runatlantis/*
+orgAllowlist: github.com/blackopslab/tf-atlantis-elk
 
 # -- Deprecated in favor of orgAllowlist.
 orgWhitelist: "<deprecated>"
