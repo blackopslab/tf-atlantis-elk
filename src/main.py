@@ -38,7 +38,32 @@ def install(envfile, verbose):
             env_install(envfile)
 
 
-# TODO: args / flags to skip envfile and pass credentials from CLI
+@main.command()
+@click.argument("envfile")
+@click.option("--verbose", "-v", is_flag=True, help="Prints 'terraform apply' output.")
+def apply(envfile, verbose):
+    """Applies all Terraform manifests in ./terraform/
+
+    envfile: Path to the .env file (e.g., env/.env)
+
+    Required file content:
+
+    GITHUB_USER=""
+    GITHUB_TOKEN=""
+    GITHUB_SECRET=""
+
+    Example:
+        python main.py apply .env --verbose
+    """
+    match verbose:
+        case True:
+            click.echo("Verbose mode is enabled.")
+            click.echo(f"Using .env file: {envfile}")
+            click.echo(env_install(envfile))
+
+        case False:
+            click.echo("Verbose mode is disabled.")
+            env_install(envfile)
 
 
 @main.command()
@@ -48,7 +73,7 @@ def version():
     Example:
         python main.py version
     """
-    click.echo("tf-atlantis-elk version: 1.2.0-alpha")
+    click.echo("tf-atlantis-cli version: 2.0.1")
 
 
 if __name__ == "__main__":

@@ -45,7 +45,9 @@ def _load_env_file(envfile: str) -> None:
 def _unload_env_file(envfile: str) -> None:
     env_vars = dotenv_values(envfile)
     for key in env_vars.keys():
-        os.environ.pop(key, None)
+        # KUBE_CONFIG_PATH is required by Atlantis/Terraform
+        if key != "KUBE_CONFIG_PATH":
+            os.environ.pop(key, None)
 
 
 def _run_terraform_init() -> None:
@@ -75,6 +77,15 @@ def _run_terraform_apply() -> None:
     )
 
 
+def _run_terraform_destroy() -> None:
+    _run_command(
+        f"terraform destroy -auto-approve\
+                -var 'github_user={os.environ['GITHUB_USER']}' \
+                -var 'github_token={os.environ['GITHUB_TOKEN']}' \
+                -var 'github_secret={os.environ['GITHUB_SECRET']}'"
+    )
+
+
 ### MAP DEPENDENCIES ###
 
 
@@ -90,8 +101,40 @@ def _map_binaries() -> List[Tuple[str, str, str, str, str]]:
     ]
 
 
-# def _map_helm_repos() -> List[Tuple[str, str]]:
-#     return [("Atlantis", "https://runatlantis.github.io/helm-charts")]
+def apply(envfile: str) -> str:
+
+    print("")
+    print("Creating all Terraform resources...")
+
+    _load_env_file(envfile)
+
+    _change_working_directory("./terraform/")
+
+    _run_terraform_apply()
+
+    # _unload_env_file(envfile)
+
+    _change_working_directory("../")
+
+    return "'terraform apply' completed successfully."
+
+
+def destroy(envfile: str) -> str:
+
+    print("")
+    print("Destroying all Terraform resources...")
+
+    _load_env_file(envfile)
+
+    _change_working_directory("./terraform/")
+
+    _run_terraform_apply()
+
+    # _unload_env_file(envfile)
+
+    _change_working_directory("../")
+
+    return "'terraform destroy' completed successfully."
 
 
 ### INSTALLATION SCRIPT ###
@@ -166,7 +209,7 @@ def install(envfile: str) -> str:
 
         _run_terraform_apply()
 
-        _unload_env_file(envfile)
+        # _unload_env_file(envfile)
 
         _change_working_directory("../")
 

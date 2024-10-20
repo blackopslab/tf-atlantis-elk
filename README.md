@@ -45,14 +45,11 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 
 ### 🧑‍🏭 Future Improvements
 
-* `terraform destroy` -> not working correctly. Add graceful rollout with fix or workaround
 * Deploy monitoring solution
     * Prometheus ⚒️
     * Opensearch ⚒️
     * logstash ⚒️
     * kibana ⚒️
-* The CLI tool currently downloads a local copy of the `terraform` binary.
-  This is probably useless: Atlantis will not be able to find it, unless it is permanently appended to $PATH -> remove.
 
 See various inline `# TODO:` comments!
 

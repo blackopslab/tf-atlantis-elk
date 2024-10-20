@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: help config install expose clean format alpha release
+.PHONY: help config install expose clean apply destroy format alpha release
 
 help:
 	@echo "Makefile Commands:"
@@ -7,6 +7,8 @@ help:
 	@echo "  install  - Install the required Python packages."
 	@echo "  expose   - Exposes to the internet using cloudflared"
 	@echo "  clean    - Remove binary files."
+	@echo "  apply    - Applie all Terraform manifests."
+	@echo "  destroy  - Destroy all Terraform resources."
 	@echo "  format   - Format Terraform files."
 	@echo "  alpha    - Generate changelog and create an alpha tag."
 	@echo "  release  - Generate changelog and create a release tag."
@@ -50,6 +52,28 @@ clean:
 	@rm -rf .venv
 	@rm -rf terraform/.terraform*
 	@rm -rf terraform/*.tfstate*
+	@echo ""
+
+apply:
+	@if ! [ -d .venv ]; then \
+		echo "No virtual environment in .venv. Please run `make config`."; \
+	else \
+		echo "Activating the virtual environment..."; \
+		source .venv/bin/activate; \
+		python3 src/main.py apply "env/.env" --verbose; \
+		echo ""; \
+	fi
+	@echo ""
+
+destroy:
+	@if ! [ -d .venv ]; then \
+		echo "No virtual environment in .venv. Please run `make config`."; \
+	else \
+		echo "Activating the virtual environment..."; \
+		source .venv/bin/activate; \
+		python3 src/main.py destroy "env/.env" --verbose; \
+		echo ""; \
+	fi
 	@echo ""
 
 format:
