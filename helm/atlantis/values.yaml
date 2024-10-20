@@ -11,7 +11,7 @@ nameOverride: ""
 # -- An option to override the atlantis url,
 # if not using an ingress, set it to the external IP.
 # Check values.yaml for examples.
-atlantisUrl: "https://starring-namely-bug-theaters.trycloudflare.com"
+atlantisUrl: "https://doc-subjects-unauthorized-hans.trycloudflare.com"
 # Example:  http://10.0.0.0
 
 # -- Replace this with your own repo allowlist.
