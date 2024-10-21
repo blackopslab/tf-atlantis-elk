@@ -222,12 +222,12 @@ def install(envfile: str) -> str:
 
         _run_terraform_apply()
 
-        _create_secret("atlantis-github-secrets", envfile)
-        # TODO: isolate secret name in env/.env
-
         _unload_env_file(envfile)
 
         _change_working_directory("../")
+
+        _create_secret("atlantis-github-secrets", envfile)
+        # TODO: isolate secret name in env/.env
 
     except Exception as e:
         return f"Error during installation: {e}"
