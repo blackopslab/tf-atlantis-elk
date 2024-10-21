@@ -6,6 +6,11 @@
 
 ### 📋 Current Status
 
+* Deploying monitoring solution
+    * Prometheus ⚒️ -> added to Terraform ⚒️
+    * Opensearch ⚒️
+    * Kibana ⚒️
+    * Bonus: logstash ⚒️
 * Cluster exposed to the internet 🎉
 * Added cloudflare quick tunnel ✅
 * Added Makefile & Atlantis Helm Chart ✅
@@ -15,11 +20,10 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 
 ### 🧑‍🏭 Future Improvements
 
-* Deploy monitoring solution
-    * Prometheus ⚒️
-    * Opensearch ⚒️
-    * logstash ⚒️
-    * kibana ⚒️
+* Cloudflared
+    * Automate execution with a wrapper that outputs the public url into a variable and injects it into helm/atlantis/values.yaml
+    * Add to the beginning of `make all` and remind user to copy-paste to github webhook
+
 
 See various inline `# TODO:` comments!
 
