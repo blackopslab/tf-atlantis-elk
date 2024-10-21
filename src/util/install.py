@@ -50,6 +50,17 @@ def _unload_env_file(envfile: str) -> None:
             os.environ.pop(key, None)
 
 
+def _create_secret(secret_name: str, envfile: str) -> None:
+    _run_command(
+        f"kubectl create secret generic {secret_name} \
+            --from-env-file={envfile}"
+    )
+
+
+def _delete_secret(secret_name: str) -> None:
+    _run_command(f"kubectl delete secret {secret_name}")
+
+
 def _run_terraform_init() -> None:
     _run_command(
         "terraform init \
@@ -112,9 +123,12 @@ def apply(envfile: str) -> str:
 
     _run_terraform_apply()
 
-    # _unload_env_file(envfile)
+    _create_secret("atlantis-github-secrets", envfile)
+    # TODO: isolate secret name in env/.env
 
     _change_working_directory("../")
+
+    _unload_env_file(envfile)
 
     return "'terraform apply' completed successfully."
 
@@ -130,9 +144,9 @@ def destroy(envfile: str) -> str:
 
     _run_terraform_destroy()
 
-    # _unload_env_file(envfile)
-
     _change_working_directory("../")
+
+    _unload_env_file(envfile)
 
     return "'terraform destroy' completed successfully."
 
@@ -150,7 +164,6 @@ def install(envfile: str) -> str:
     # TODO flag to skip download
 
     BINARIES = _map_binaries()
-    # REPOS = _map_helm_repos()
 
     # Ensure working directories have not been deleted
     print("Generating required directory tree...")
@@ -209,7 +222,10 @@ def install(envfile: str) -> str:
 
         _run_terraform_apply()
 
-        # _unload_env_file(envfile)
+        _create_secret("atlantis-github-secrets", envfile)
+        # TODO: isolate secret name in env/.env
+
+        _unload_env_file(envfile)
 
         _change_working_directory("../")
 
