@@ -10,13 +10,13 @@ workflows:
       steps:
       - env:
           name: GITHUB_USER
-          command: 'kubectl get secret atlantis-github-secrets -o jsonpath="{.data.GITHUB_USER}" | base64 --decode'
+          value: "${{ GITHUB_USER }}"
       - env:
           name: GITHUB_TOKEN
-          command: 'kubectl get secret atlantis-github-secrets -o jsonpath="{.data.GITHUB_TOKEN}" | base64 --decode'
+          value: "${{ GITHUB_TOKEN }}"
       - env:
           name: GITHUB_SECRET
-          command: 'kubectl get secret atlantis-github-secrets -o jsonpath="{.data.GITHUB_SECRET}" | base64 --decode'
+          value: "${{ GITHUB_SECRET }}"
       - env:
           name: KUBE_CONFIG_PATH
           value: "~/.kube/config"
@@ -27,13 +27,13 @@ workflows:
       steps:
       - env:
           name: GITHUB_USER
-          command: 'kubectl get secret atlantis-github-secrets -o jsonpath="{.data.GITHUB_USER}" | base64 --decode'
+          value: "${{ GITHUB_USER }}"
       - env:
           name: GITHUB_TOKEN
-          command: 'kubectl get secret atlantis-github-secrets -o jsonpath="{.data.GITHUB_TOKEN}" | base64 --decode'
+          value: "${{ GITHUB_TOKEN }}"
       - env:
           name: GITHUB_SECRET
-          command: 'kubectl get secret atlantis-github-secrets -o jsonpath="{.data.GITHUB_SECRET}" | base64 --decode'
+          value: "${{ GITHUB_SECRET }}"
       - env:
           name: KUBE_CONFIG_PATH
           value: "~/.kube/config"
