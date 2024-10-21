@@ -1,5 +1,7 @@
 import sys, click
 from util.install import install as env_install
+from util.install import apply as env_apply
+from util.install import destroy as env_destroy
 
 
 @click.group()
@@ -38,7 +40,62 @@ def install(envfile, verbose):
             env_install(envfile)
 
 
-# TODO: args / flags to skip envfile and pass credentials from CLI
+@main.command()
+@click.argument("envfile")
+@click.option("--verbose", "-v", is_flag=True, help="Prints 'terraform apply' output.")
+def apply(envfile, verbose):
+    """Creates all Terraform resources in ./terraform/
+
+    envfile: Path to the .env file (e.g., env/.env)
+
+    Required file content:
+
+    GITHUB_USER=""
+    GITHUB_TOKEN=""
+    GITHUB_SECRET=""
+
+    Example:
+        python main.py apply .env --verbose
+    """
+    match verbose:
+        case True:
+            click.echo("Verbose mode is enabled.")
+            click.echo(f"Using .env file: {envfile}")
+            click.echo(env_apply(envfile))
+
+        case False:
+            click.echo("Verbose mode is disabled.")
+            env_apply(envfile)
+
+
+@main.command()
+@click.argument("envfile")
+@click.option(
+    "--verbose", "-v", is_flag=True, help="Prints 'terraform destroy' output."
+)
+def destroy(envfile, verbose):
+    """Destroys all Terraform resources in ./terraform/
+
+    envfile: Path to the .env file (e.g., env/.env)
+
+    Required file content:
+
+    GITHUB_USER=""
+    GITHUB_TOKEN=""
+    GITHUB_SECRET=""
+
+    Example:
+        python main.py destroy .env --verbose
+    """
+    match verbose:
+        case True:
+            click.echo("Verbose mode is enabled.")
+            click.echo(f"Using .env file: {envfile}")
+            click.echo(env_destroy(envfile))
+
+        case False:
+            click.echo("Verbose mode is disabled.")
+            env_destroy(envfile)
 
 
 @main.command()
@@ -48,7 +105,7 @@ def version():
     Example:
         python main.py version
     """
-    click.echo("tf-atlantis-elk version: 1.2.0-alpha")
+    click.echo("tf-atlantis-cli version: 2.0.1")
 
 
 if __name__ == "__main__":
