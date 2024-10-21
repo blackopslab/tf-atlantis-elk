@@ -1,6 +1,4 @@
 version: 3
-autoplan:
-  enabled: true
 
 workflows:
   default:
@@ -10,10 +8,9 @@ workflows:
             GITHUB_USER=$(kubectl get secret <your-secret-name> -o jsonpath='{.data.GITHUB_USER}' | base64 --decode)
             GITHUB_TOKEN=$(kubectl get secret <your-secret-name> -o jsonpath='{.data.GITHUB_TOKEN}' | base64 --decode)
             GITHUB_SECRET=$(kubectl get secret <your-secret-name> -o jsonpath='{.data.GITHUB_SECRET}' | base64 --decode)
-            terraform init
             terraform plan -var "github_user=$GITHUB_USER" -var "github_token=$GITHUB_TOKEN" -var "github_secret=$GITHUB_SECRET"
-      dir: terraform/
+          dir: terraform/
     apply:
       steps:
         - run: terraform apply
-      dir: terraform/
+          dir: terraform/
