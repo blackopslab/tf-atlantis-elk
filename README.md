@@ -7,7 +7,7 @@
 ### 📋 Current Status
 
 * Deploying monitoring solution
-    * Prometheus ⚒️ -> added to Terraform ⚒️
+    * Prometheus ⚒️ -> added to Terraform ✅
     * Opensearch ⚒️
     * Kibana ⚒️
     * Bonus: logstash ⚒️
@@ -21,10 +21,8 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 ### 🧑‍🏭 Future Improvements
 
 * Cloudflared
-    * Automate execution with a wrapper that outputs the public url into a variable and injects it into helm/atlantis/values.yaml
-    * Add to the beginning of `make all` and remind user to copy-paste to github webhook
+    * Automate execution and remind user to copy-paste to github webhook
     * Wrap into a crd
-
 
 See various inline `# TODO:` comments!
 
@@ -39,9 +37,9 @@ See various inline `# TODO:` comments!
 
 ## 🛠️ Building and Running
 
-1. Please create `atlantis/.env` from template
+1. Please create `terraform/variables.tfvars` from template
     ```bash
-    cp env/.env.template env/.env
+    cp terraform/variables.tfvars.template terraform/variables.tfvars
     ```
     and fill in all fields appropriately.
 

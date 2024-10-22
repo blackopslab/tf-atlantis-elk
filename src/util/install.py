@@ -23,7 +23,11 @@ def _change_working_directory(path: str) -> None:
 
 
 def _download_binary(url: str, output_path: str) -> None:
-    _run_command(f"wget {url} -O {output_path}")
+    if os.path.exists(output_path):
+        print(f"{output_path} already exists!")
+        return
+    else:
+        _run_command(f"wget {url} -O {output_path}")
 
 
 def _unzip_binary(zip_path: str, extract_to: str) -> None:
@@ -75,9 +79,6 @@ def _run_terraform_apply() -> None:
 
 def _run_terraform_destroy() -> None:
     _run_command("terraform destroy -auto-approve -var-file='variables.tfvars'")
-
-
-### MAP DEPENDENCIES ###
 
 
 def _map_binaries() -> List[Tuple[str, str, str, str, str]]:

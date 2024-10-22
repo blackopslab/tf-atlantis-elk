@@ -54,7 +54,7 @@ clean: destroy prune
 
 prune:
 	@echo "Pruning files..."
-	@rm -rf bin/*
+#	@rm -rf bin/*
 	@rm -rf tmp/*
 	@rm -rf .venv
 	@rm -rf terraform/.terraform*
