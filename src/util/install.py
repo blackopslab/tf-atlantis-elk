@@ -62,39 +62,19 @@ def _delete_secret(secret_name: str) -> None:
 
 
 def _run_terraform_init() -> None:
-    _run_command(
-        "terraform init \
-                -var 'github_user='{os.environ['GITHUB_USER']}'' \
-                -var 'github_token='{os.environ['GITHUB_TOKEN']}'' \
-                -var 'github_secret='{os.environ['GITHUB_SECRET']}''"
-    )
+    _run_command("terraform init -var-file='variables.tfvars'")
 
 
 def _run_terraform_plan() -> None:
-    _run_command(
-        f"terraform plan \
-                -var 'github_user={os.environ['GITHUB_USER']}' \
-                -var 'github_token={os.environ['GITHUB_TOKEN']}' \
-                -var 'github_secret={os.environ['GITHUB_SECRET']}'"
-    )
+    _run_command("terraform plan -var-file='variables.tfvars'")
 
 
 def _run_terraform_apply() -> None:
-    _run_command(
-        f"terraform apply -auto-approve\
-                -var 'github_user={os.environ['GITHUB_USER']}' \
-                -var 'github_token={os.environ['GITHUB_TOKEN']}' \
-                -var 'github_secret={os.environ['GITHUB_SECRET']}'"
-    )
+    _run_command("terraform apply -auto-approve -var-file='variables.tfvars'")
 
 
 def _run_terraform_destroy() -> None:
-    _run_command(
-        f"terraform destroy -auto-approve\
-                -var 'github_user={os.environ['GITHUB_USER']}' \
-                -var 'github_token={os.environ['GITHUB_TOKEN']}' \
-                -var 'github_secret={os.environ['GITHUB_SECRET']}'"
-    )
+    _run_command("terraform destroy -auto-approve -var-file='variables.tfvars'")
 
 
 ### MAP DEPENDENCIES ###
