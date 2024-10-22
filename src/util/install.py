@@ -1,6 +1,5 @@
 import os, subprocess, shlex
 from typing import List, Tuple
-from dotenv import load_dotenv, dotenv_values
 
 
 # Run any command as a subprocess
@@ -16,42 +15,88 @@ def _run_command(command: str) -> str:
 
 
 def _change_working_directory(path: str) -> None:
-    os.chdir(path)
+    try:
+        os.chdir(path)
+    except FileNotFoundError:
+        print(f"Directory {path} not found.")
+        raise
+    except NotADirectoryError:
+        print(f"{path} is not a directory.")
+        raise
+    except PermissionError:
+        print(f"Permission denied to access {path}.")
+        raise
 
 
 def _download_binary(url: str, output_path: str) -> None:
-    if os.path.exists(output_path):
-        print(f"{output_path} already exists!")
-        return
-    else:
-        _run_command(f"wget {url} -O {output_path}")
+    try:
+        if os.path.exists(output_path):
+            print(f"{output_path} already exists!")
+            return
+        else:
+            _run_command(f"wget {url} -O {output_path}")
+    except OSError:
+        print(f"Error downloading {url} to {output_path}")
+        raise
 
 
-#
-# TODO: Error handling -> impossible to write e.g. directory drive permissions
-#       Also see compliance logic TODO:189
 def _unzip_binary(zip_path: str, extract_to: str) -> None:
-    _run_command(f"unzip {zip_path} -d {extract_to}")
+    try:
+        _run_command(f"unzip {zip_path} -d {extract_to}")
+    except OSError:
+        _set_permissions(extract_to, "755")
+        try:
+            _run_command(f"unzip {zip_path} -d {extract_to}")
+        except OSError as e:
+            print(f"Failed to unzip {zip_path} again after setting permissions.")
+            raise e
 
 
 def _untar_binary(tar_path: str, extract_to: str) -> None:
-    _run_command(f"tar -xvf {tar_path} -C {extract_to}")
+    try:
+        _run_command(f"tar -xvf {tar_path} -C {extract_to}")
+    except OSError:
+        _set_permissions(extract_to, "755")
+        try:
+            _run_command(f"tar -xvf {tar_path} -C {extract_to}")
+        except OSError as e:
+            print(f"Failed to untar {tar_path} again after setting permissions.")
+            raise e  # Re-raise the exception to propagate the error
 
 
 def _match_and_extract(name: str, temp_path: str, install_path: str):
+    try:
+        _, file_extension = os.path.splitext(temp_path)
+        match file_extension:
+            case ".gz":
+                print(f"Extracting {name} binary from tar.gz...")
+                _untar_binary(temp_path, install_path)
+            case ".zip":
+                print(f"Extracting {name} binary from zip...")
+                _unzip_binary(temp_path, install_path)
+            case "":
+                print(f"No extension for {name}. Skipping extraction.")
+            case _:
+                print(f"Unknown file type for {name}.")
+    except OSError:
+        print(f"Error extracting {name} binary.")
+        raise
 
-    _, file_extension = os.path.splitext(temp_path)
-    match file_extension:
-        case ".gz":
-            print(f"Extracting {name} binary from tar.gz...")
-            _untar_binary(temp_path, install_path)
-        case ".zip":
-            print(f"Extracting {name} binary from zip...")
-            _unzip_binary(temp_path, install_path)
-        case "":
-            print(f"No extension for {name}. Skipping extraction.")
-        case _:
-            print(f"Unknown file type for {name}.")
+
+def _install_binaries(binaries):
+    for name, url, temp_path, install_path, permissions in binaries:
+        try:
+            print(f"Downloading {name} binary...")
+            _download_binary(url, temp_path)
+            _match_and_extract(name, temp_path, install_path)
+            _set_permissions(install_path, permissions)
+
+        except RuntimeError as e:
+            print(f"Error downloading {name} binary: {e}")
+            print(f"URL {url} does not respond!")
+
+        except Exception as e:
+            print(f"Unexpected error installing {name} binary: {e}")
 
 
 def _set_permissions(path: str, mode: str) -> None:
@@ -90,52 +135,39 @@ def _map_binaries() -> List[Tuple[str, str, str, str, str]]:
     ]
 
 
+def _terraform_operation(operation: str) -> str:
+    try:
+        print(f"\n{operation.capitalize()} all Terraform resources...")
+        _set_kube_config_path("~/.kube/config/")
+        _change_working_directory("./terraform/")
+
+        if operation == "apply":
+            _run_terraform_apply()
+        elif operation == "destroy":
+            _run_terraform_destroy()
+
+        _change_working_directory("../")
+        return f"'terraform {operation}' completed successfully."
+
+    except Exception as e:
+        return f"Error during 'terraform {operation}': {e}"
+
+
 def t_apply() -> str:
-
-    # TODO: add error handling
-
-    print("")
-    print("Creating all Terraform resources...")
-
-    _set_kube_config_path("~/.kube/config/")
-
-    _change_working_directory("./terraform/")
-
-    _run_terraform_apply()
-
-    _change_working_directory("../")
-
-    return "'terraform apply' completed successfully."
+    return _terraform_operation("apply")
 
 
 def t_destroy() -> str:
-
-    # TODO: add error handling
-
-    print("")
-    print("Destroying all Terraform resources...")
-
-    _set_kube_config_path("~/.kube/config/")
-
-    _change_working_directory("./terraform/")
-
-    _run_terraform_destroy()
-
-    _change_working_directory("../")
-
-    return "'terraform destroy' completed successfully."
+    return _terraform_operation("destroy")
 
 
 def t_install() -> str:
-
-    print("")
-    print("1. POPULATING ENVIRONMENT...")
+    print("\n1. POPULATING ENVIRONMENT...")
 
     BINARIES = _map_binaries()
 
-    # Ensure working directories have not been deleted
-    print("Generating required directory tree...")
     try:
+        print("Generating required directory tree...")
         os.makedirs("./bin", exist_ok=True)
         os.makedirs("./tmp", exist_ok=True)
 
@@ -143,38 +175,15 @@ def t_install() -> str:
         print(f"Error creating required directories: {e}")
         return "Installation failed due to directory creation error."
 
-    # Download, extract and install binaries
-    for name, url, temp_path, install_path, permissions in BINARIES:
-        try:
-            print(f"Downloading {name} binary...")
-            _download_binary(url, temp_path)
-            # TODO: test nested exceptions when handling TODO:54
-            _match_and_extract(name, temp_path, install_path)
-            _set_permissions(install_path, permissions)
-
-        except RuntimeError as e:
-            print(f"Error downloading {name} binary: {e}")
-            print(f"URL {url} does not respond!")
-
-        except Exception as e:
-            print(f"Unexpected error installing {name} binary: {e}")
-
-    # TODO: compliance test
+    _install_binaries(BINARIES)
 
     try:
-        print("")
-        print("2. INSTALLING...")
-
+        print("\n2. INSTALLING...")
         _set_kube_config_path("~/.kube/config/")
-
         _change_working_directory("./terraform/")
-
         _run_terraform_init()
-
         _run_terraform_plan()
-
         _run_terraform_apply()
-
         _change_working_directory("../")
 
     except Exception as e:
