@@ -2,9 +2,6 @@ import os, subprocess, shlex
 from typing import List, Tuple
 from dotenv import load_dotenv, dotenv_values
 
-from util.check_permissions_and_files import check_permissions_and_files
-
-### MAP COMMANDS ###
 
 # Run any command as a subprocess
 def _run_command(command: str) -> str:
@@ -16,19 +13,6 @@ def _run_command(command: str) -> str:
         raise RuntimeError(
             f"Command '{command}' failed with error: {e.output.decode('utf-8')}"
         )
-
-
-# TODO: dismiss
-# def _load_env_file(envfile: str) -> None:
-#     load_dotenv(envfile)
-
-
-# def _unload_env_file(envfile: str) -> None:
-#     env_vars = dotenv_values(envfile)
-#     for key in env_vars.keys():
-#         # KUBE_CONFIG_PATH is required by Atlantis/Terraform
-#         if key != "KUBE_CONFIG_PATH":
-#             os.environ.pop(key, None)
 
 
 def _change_working_directory(path: str) -> None:
@@ -76,18 +60,6 @@ def _set_permissions(path: str, mode: str) -> None:
 
 def _set_kube_config_path(conf_path: str) -> None:
     os.environ["KUBE_CONFIG_PATH"] = conf_path
-
-
-# TODO: needs to be refactored to use .tfvars
-# def _create_secret(secret_name: str, envfile: str) -> None:
-#     _run_command(
-#         f"kubectl create secret generic {secret_name} \
-#             --from-env-file={envfile}"
-#     )
-
-
-# def _delete_secret(secret_name: str) -> None:
-#     _run_command(f"kubectl delete secret {secret_name}")
 
 
 def _run_terraform_init() -> None:
