@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0-alpha.4](///compare/v2.0.0-alpha.3...v2.0.0-alpha.4) (2024-10-22)
+
+
+### Features
+
+* refactor CLI tool 5d2cd65
+
 ## [2.0.0-alpha.3](///compare/v2.0.0-alpha.1...v2.0.0-alpha.3) (2024-10-22)
 
 

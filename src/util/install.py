@@ -18,6 +18,19 @@ def _run_command(command: str) -> str:
         )
 
 
+# TODO: dismiss
+# def _load_env_file(envfile: str) -> None:
+#     load_dotenv(envfile)
+
+
+# def _unload_env_file(envfile: str) -> None:
+#     env_vars = dotenv_values(envfile)
+#     for key in env_vars.keys():
+#         # KUBE_CONFIG_PATH is required by Atlantis/Terraform
+#         if key != "KUBE_CONFIG_PATH":
+#             os.environ.pop(key, None)
+
+
 def _change_working_directory(path: str) -> None:
     os.chdir(path)
 
@@ -30,6 +43,9 @@ def _download_binary(url: str, output_path: str) -> None:
         _run_command(f"wget {url} -O {output_path}")
 
 
+#
+# TODO: Error handling -> impossible to write e.g. directory drive permissions
+#       Also see compliance logic TODO:189
 def _unzip_binary(zip_path: str, extract_to: str) -> None:
     _run_command(f"unzip {zip_path} -d {extract_to}")
 
@@ -38,31 +54,40 @@ def _untar_binary(tar_path: str, extract_to: str) -> None:
     _run_command(f"tar -xvf {tar_path} -C {extract_to}")
 
 
+def _match_and_extract(name: str, temp_path: str, install_path: str):
+
+    _, file_extension = os.path.splitext(temp_path)
+    match file_extension:
+        case ".gz":
+            print(f"Extracting {name} binary from tar.gz...")
+            _untar_binary(temp_path, install_path)
+        case ".zip":
+            print(f"Extracting {name} binary from zip...")
+            _unzip_binary(temp_path, install_path)
+        case "":
+            print(f"No extension for {name}. Skipping extraction.")
+        case _:
+            print(f"Unknown file type for {name}.")
+
+
 def _set_permissions(path: str, mode: str) -> None:
     _run_command(f"chmod {mode} {path}")
 
 
-def _load_env_file(envfile: str) -> None:
-    load_dotenv(envfile)
+def _set_kube_config_path(conf_path: str) -> None:
+    os.environ["KUBE_CONFIG_PATH"] = conf_path
 
 
-def _unload_env_file(envfile: str) -> None:
-    env_vars = dotenv_values(envfile)
-    for key in env_vars.keys():
-        # KUBE_CONFIG_PATH is required by Atlantis/Terraform
-        if key != "KUBE_CONFIG_PATH":
-            os.environ.pop(key, None)
+# TODO: needs to be refactored to use .tfvars
+# def _create_secret(secret_name: str, envfile: str) -> None:
+#     _run_command(
+#         f"kubectl create secret generic {secret_name} \
+#             --from-env-file={envfile}"
+#     )
 
 
-def _create_secret(secret_name: str, envfile: str) -> None:
-    _run_command(
-        f"kubectl create secret generic {secret_name} \
-            --from-env-file={envfile}"
-    )
-
-
-def _delete_secret(secret_name: str) -> None:
-    _run_command(f"kubectl delete secret {secret_name}")
+# def _delete_secret(secret_name: str) -> None:
+#     _run_command(f"kubectl delete secret {secret_name}")
 
 
 def _run_terraform_init() -> None:
@@ -93,33 +118,32 @@ def _map_binaries() -> List[Tuple[str, str, str, str, str]]:
     ]
 
 
-def apply(envfile: str) -> str:
+def t_apply() -> str:
+
+    # TODO: add error handling
 
     print("")
     print("Creating all Terraform resources...")
 
-    _load_env_file(envfile)
+    _set_kube_config_path("~/.kube/config/")
 
     _change_working_directory("./terraform/")
 
     _run_terraform_apply()
 
-    _create_secret("atlantis-github-secrets", envfile)
-    # TODO: isolate secret name in env/.env
-
     _change_working_directory("../")
-
-    _unload_env_file(envfile)
 
     return "'terraform apply' completed successfully."
 
 
-def destroy(envfile: str) -> str:
+def t_destroy() -> str:
+
+    # TODO: add error handling
 
     print("")
     print("Destroying all Terraform resources...")
 
-    _load_env_file(envfile)
+    _set_kube_config_path("~/.kube/config/")
 
     _change_working_directory("./terraform/")
 
@@ -127,22 +151,13 @@ def destroy(envfile: str) -> str:
 
     _change_working_directory("../")
 
-    _unload_env_file(envfile)
-
     return "'terraform destroy' completed successfully."
 
 
-### INSTALLATION SCRIPT ###
-
-
-def install(envfile: str) -> str:
-
-    # PRE-TASKS
+def t_install() -> str:
 
     print("")
     print("1. POPULATING ENVIRONMENT...")
-
-    # TODO flag to skip download
 
     BINARIES = _map_binaries()
 
@@ -161,20 +176,8 @@ def install(envfile: str) -> str:
         try:
             print(f"Downloading {name} binary...")
             _download_binary(url, temp_path)
-            _, file_extension = os.path.splitext(temp_path)
-
-            match file_extension:
-                case ".gz":
-                    print(f"Extracting {name} binary from tar.gz...")
-                    _untar_binary(temp_path, install_path)
-                case ".zip":
-                    print(f"Extracting {name} binary from zip...")
-                    _unzip_binary(temp_path, install_path)
-                case "":
-                    print(f"No extension for {name}. Skipping extraction.")
-                case _:
-                    print(f"Unknown file type for {name}.")
-
+            # TODO: test nested exceptions when handling TODO:54
+            _match_and_extract(name, temp_path, install_path)
             _set_permissions(install_path, permissions)
 
         except RuntimeError as e:
@@ -184,16 +187,13 @@ def install(envfile: str) -> str:
         except Exception as e:
             print(f"Unexpected error installing {name} binary: {e}")
 
-    # TODO: fix compliance test
-    # print("")
-    # print("Running compliance tests...")
-    # check_permissions_and_files("src/util/rules.json")
+    # TODO: compliance test
 
     try:
         print("")
         print("2. INSTALLING...")
 
-        _load_env_file(envfile)
+        _set_kube_config_path("~/.kube/config/")
 
         _change_working_directory("./terraform/")
 
@@ -203,12 +203,7 @@ def install(envfile: str) -> str:
 
         _run_terraform_apply()
 
-        _unload_env_file(envfile)
-
         _change_working_directory("../")
-
-        _create_secret("atlantis-github-secrets", envfile)
-        # TODO: isolate secret name in env/.env
 
     except Exception as e:
         return f"Error during installation: {e}"

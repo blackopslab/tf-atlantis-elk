@@ -1,7 +1,7 @@
 import sys, click
-from util.install import install as env_install
-from util.install import apply as env_apply
-from util.install import destroy as env_destroy
+from util.install import t_install as env_install
+from util.install import t_apply as env_apply
+from util.install import t_destroy as env_destroy
 
 
 @click.group()
@@ -13,89 +13,59 @@ def main():
 
 
 @main.command()
-@click.argument("envfile")
 @click.option("--verbose", "-v", is_flag=True, help="Prints installation output.")
-def install(envfile, verbose):
-    """Installs Atlantis from GitHub credentials provided by envfile.
-
-    envfile: Path to the .env file (e.g., env/.env)
-
-    Required file content:
-
-    GITHUB_USER=""
-    GITHUB_TOKEN=""
-    GITHUB_SECRET=""
+def install(verbose):
+    """Installs Atlantis from GitHub credentials provided by terraform/variables.tfvars.
 
     Example:
-        python main.py install .env --verbose
+        python main.py install --verbose
     """
     match verbose:
         case True:
             click.echo("Verbose mode is enabled.")
-            click.echo(f"Using .env file: {envfile}")
-            click.echo(env_install(envfile))
+            click.echo(env_install())
 
         case False:
             click.echo("Verbose mode is disabled.")
-            env_install(envfile)
+            env_install()
 
 
 @main.command()
-@click.argument("envfile")
 @click.option("--verbose", "-v", is_flag=True, help="Prints 'terraform apply' output.")
-def apply(envfile, verbose):
+def apply(verbose):
     """Creates all Terraform resources in ./terraform/
 
-    envfile: Path to the .env file (e.g., env/.env)
-
-    Required file content:
-
-    GITHUB_USER=""
-    GITHUB_TOKEN=""
-    GITHUB_SECRET=""
-
     Example:
-        python main.py apply .env --verbose
+        python main.py apply --verbose
     """
     match verbose:
         case True:
             click.echo("Verbose mode is enabled.")
-            click.echo(f"Using .env file: {envfile}")
-            click.echo(env_apply(envfile))
+            click.echo(env_apply())
 
         case False:
             click.echo("Verbose mode is disabled.")
-            env_apply(envfile)
+            env_apply()
 
 
 @main.command()
-@click.argument("envfile")
 @click.option(
     "--verbose", "-v", is_flag=True, help="Prints 'terraform destroy' output."
 )
-def destroy(envfile, verbose):
+def destroy(verbose):
     """Destroys all Terraform resources in ./terraform/
 
-    envfile: Path to the .env file (e.g., env/.env)
-
-    Required file content:
-
-    GITHUB_USER=""
-    GITHUB_TOKEN=""
-    GITHUB_SECRET=""
-
     Example:
-        python main.py destroy .env --verbose
+        python main.py destroy --verbose
     """
     match verbose:
         case True:
             click.echo("Verbose mode is enabled.")
-            click.echo(f"Using .env file: {envfile}")
-            click.echo(env_destroy(envfile))
+            click.echo(env_destroy())
 
         case False:
             click.echo("Verbose mode is disabled.")
-            env_destroy(envfile)
+            env_destroy()
 
 
 @main.command()
@@ -105,16 +75,13 @@ def version():
     Example:
         python main.py version
     """
-    click.echo("tf-atlantis-cli version: 2.0.1")
+    click.echo("tf-atlantis-cli version: 3.0.0")
 
 
 if __name__ == "__main__":
     # show help if no args
     if len(sys.argv) == 1:
         click.echo("No command provided. Use one of the following:")
-        click.echo(
-            "  install <envfile>   Install packages from the specified requirements file."
-        )
         click.echo("  version             Show the version of the CLI tool.")
         click.echo("\nFor more information, run 'python main.py <command> --help'.")
     else:

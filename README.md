@@ -23,6 +23,8 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 * Cloudflared
     * Automate execution and remind user to copy-paste to github webhook
     * Wrap into a crd
+* Review error handling
+* Implement appropriate CLI tool tests
 
 See various inline `# TODO:` comments!
 
@@ -57,7 +59,7 @@ or just run
 ```bash
 make all # -> runs clean, config, install
 ```
-`make all` consistes of `make clean | config | install`.
+`make all` consists of `make clean | config | install`.
 Warning: `make clean` will destroy all Terraform resources and reset your local repo and python environment.
 The included commands can also be run manually.
 
@@ -88,7 +90,7 @@ should return a *quick url* with public access to the Atlantis entry point, e.g.
 
 Just run `make all` on top of the running cluster to wipe it and deploy all resources from scratch.
 
-Info: During tests `make all`, performed well most of the time, but namespace deletion tended to hang at the `Terminating` phase.
+Info: During tests `make all` performed well most of the time, but namespace deletion tended to hang at the `Terminating` phase.
 To quickly kill the process, you can run the following finalizer script:
     ```bash
     src/scripts/finalize_namespace.sh atlantis
