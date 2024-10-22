@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0-alpha.2](///compare/v2.0.0-alpha.1...v2.0.0-alpha.2) (2024-10-21)
+
+
+### Features
+
+* **atlantis.yaml:** integrate GitHub secrets into terraform apply command 07da846
+* **helm/atlantis:** update repoConfig in values.yaml 8c87294
+
+
+### Bug Fixes
+
+* fix atlantis.yaml workflow 69d148f
+
 ## [1.2.0](///compare/v1.2.0-alpha.0...v1.2.0) (2024-10-17)
 
 
