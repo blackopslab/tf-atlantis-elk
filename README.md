@@ -5,35 +5,12 @@
 * Automated single-node deployment of Atlantis, with on-board resource monitoring and log collection
 
 ### 📋 Current Status
-```bash
-.
-├── assets
-│   └── cluster.drawio
-├── bin
-├── CHANGELOG.md
-├── env
-│   └── .env.template
-├── .gitignore
-├── helm
-│   └── atlantis
-│       └── values.yaml
-├── LICENSE.md
-├── Makefile
-├── .pre-commit-config.yaml
-├── README.md
-├── src
-│   ├── __init__.py
-│   ├── main.py
-│   ├── requirements.txt
-│   └── util
-│       └── install.py
-├── terraform
-│   ├── main.tf
-│   ├── outputs.tf
-│   └── variables.tf
-└── tmp
-```
 
+* Deploying monitoring solution
+    * Prometheus ⚒️ -> added to Terraform ⚒️
+    * Opensearch ⚒️
+    * Kibana ⚒️
+    * Bonus: logstash ⚒️
 * Cluster exposed to the internet 🎉
 * Added cloudflare quick tunnel ✅
 * Added Makefile & Atlantis Helm Chart ✅
@@ -43,8 +20,10 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 
 ### 🧑‍🏭 Future Improvements
 
-* `terraform destroy` -> not working correctly. Add graceful rollout with fix or workaround
-* Expose cluster via https instead of http i.e. manage letsencrypt
+* Cloudflared
+    * Automate execution with a wrapper that outputs the public url into a variable and injects it into helm/atlantis/values.yaml
+    * Add to the beginning of `make all` and remind user to copy-paste to github webhook
+
 
 See various inline `# TODO:` comments!
 
@@ -70,6 +49,9 @@ or just run
 ```bash
 make all # -> runs clean, config, install
 ```
+`make all` consistes of `make clean | config | install`.
+Warning: `make clean` will destroy all Terraform resources and reset your local repo and python environment.
+The included commands can also be run manually.
 
 ### Expose
 
@@ -86,27 +68,26 @@ should return a *quick url* with public access to the Atlantis entry point, e.g.
 
 ⚠️ Please ensure that your firewall rules allow inbound traffic to local port `32141`! ⚠️
 
+### Destroy / Apply
+
+`make apply` and `make destroy` will automate the respective Terraform commands.
+
 ### Clean
 
-The above `make all` includes `make clean` which will reset your local repo and python environment. `make clean` can also be run manually.
+`make clean` runs `make prune` on top of `make destroy`.
 
 ### Rollout
 
-`make clean` will prune the workspace, but will **not** rollback the Helm deployment. To rollout the Atlantis deployment, please run:
+Just run `make all` on top of the running cluster to wipe it and deploy all resources from scratch.
 
-1. ```bash
-    helm delete atlantis
-    ```
-2. ```bash
-    kubectl delete --force ns atlantis
-    ```
-3. Namespace deletion tends to hang at the `Terminating` phase. To quickly kill the process, you can run the following finalizer script:
+Info: During tests `make all`, performed well most of the time, but namespace deletion tended to hang at the `Terminating` phase.
+To quickly kill the process, you can run the following finalizer script:
     ```bash
-    src/scripts/finalize_namespace.sh
+    src/scripts/finalize_namespace.sh atlantis
     ```
-   Please check that all related resources, especially `pvs` and `pvcs` have been successfully terminated. Please force delete manually where needed.
+   Warning: all unmanaged namespace resources that are still running will become orphans.
+   Please check that especially `pvs` and `pvcs` have been successfully terminated. Please force delete manually where needed.
 
-4. Run `make clean` to delete execution environment and terraform states.
 
 ## Versioning
 

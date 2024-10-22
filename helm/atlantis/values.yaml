@@ -11,11 +11,11 @@ nameOverride: ""
 # -- An option to override the atlantis url,
 # if not using an ingress, set it to the external IP.
 # Check values.yaml for examples.
-atlantisUrl: ""
+atlantisUrl: "https://yard-time-participated-thing.trycloudflare.com"
 # Example:  http://10.0.0.0
 
 # -- Replace this with your own repo allowlist.
-orgAllowlist: github.com/runatlantis/*
+orgAllowlist: "github.com/blackopslab/tf-atlantis-elk"
 
 # -- Deprecated in favor of orgAllowlist.
 orgWhitelist: "<deprecated>"
@@ -29,9 +29,9 @@ logLevel: "warn"
 # The 'hostname' key is exclusive to GitHub Enterprise installations.
 # Check values.yaml for examples.
 github:
-  user: "your_github_user"
-  token: "your_github_token"
-  secret: "your_github_secret"
+  user: ""
+  token: ""
+  secret: ""
 
 gitconfig: ""
 # gitconfig: |
@@ -418,9 +418,6 @@ environmentRaw: []
 # For example, providing ATLANTIS_GH_USER here and defining a value for github.user will result in the github.user value being used.
 # Check values.yaml for examples.
 loadEnvFromSecrets: []
-# loadEnvFromSecrets:
-#   - secret_one
-#   - secret_two
 
 # -- Optionally specify additional Kubernetes ConfigMaps to load environment variables from.
 # All key-value pairs within these ConfigMaps will be set as environment variables.
