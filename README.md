@@ -6,25 +6,36 @@
 
 ### 📋 Current Status
 
-* Deploying monitoring solution
-    * Prometheus ⚒️ -> added to Terraform ✅
-    * Opensearch ⚒️
-    * Kibana ⚒️
-    * Bonus: logstash ⚒️
+* Added GitHub hook support
 * Cluster exposed to the internet 🎉
 * Added cloudflare quick tunnel ✅
 * Added Makefile & Atlantis Helm Chart ✅
 * Added CLI tool to manage installation ✅
 
+### ⚒️ WIP
+
+* Deploying monitoring solution
+    * Prometheus
+        * Manual Helm deployment ✅
+        * Atlantis ⚒️
+    * Opensearch
+    * Kibana
+    * Bonus: logstash
+
 For details, see [CHANGELOG.md](CHANGELOG.md)
+
+### 🪲 Known Bugs
+
+* [Issue 32: Substitution error during `atlantis plan` phase](https://github.com/blackopslab/tf-atlantis-elk/issues/32)
 
 ### 🧑‍🏭 Future Improvements
 
+* Add logging
+* Add CLI tool tests
+* Add CLI tool inline documentation
 * Cloudflared
     * Automate execution and remind user to copy-paste to github webhook
     * Wrap into a crd
-* Review error handling
-* Implement appropriate CLI tool tests
 
 See various inline `# TODO:` comments!
 
@@ -35,6 +46,7 @@ See various inline `# TODO:` comments!
 * `helm`
 * `python3`
 * `pip3`
+* `click`
 * `jq`
 
 ## 🛠️ Building and Running
