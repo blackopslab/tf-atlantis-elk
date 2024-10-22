@@ -10,15 +10,21 @@ workflows:
       steps:
       - init
       - plan:
-          vars:
-            github_user: "${{ .Vars.github_user }}"
-            github_token: "${{ .Vars.github_token }}"
-            github_secret: "${{ .Vars.github_secret }}"
+          extra_args:
+            - -var
+            - github_user=${{ .Vars.github_user }}
+            - -var
+            - github_token=${{ .Vars.github_token }}
+            - -var
+            - github_secret=${{ .Vars.github_secret }}
 
     apply:
       steps:
       - apply:
-          vars:
-            github_user: "${{ .Vars.github_user }}"
-            github_token: "${{ .Vars.github_token }}"
-            github_secret: "${{ .Vars.github_secret }}"
+          extra_args:
+            - -var
+            - github_user=${{ .Vars.github_user }}
+            - -var
+            - github_token=${{ .Vars.github_token }}
+            - -var
+            - github_secret=${{ .Vars.github_secret }}

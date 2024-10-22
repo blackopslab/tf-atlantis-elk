@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0-alpha.6](///compare/v2.0.0-alpha.5...v2.0.0-alpha.6) (2024-10-22)
+
+
+### Bug Fixes
+
+* **atlantis.yaml:** replace vars fix extra_args in plan and apply steps 6f6533a
+
 ## [2.0.0-alpha.5](///compare/v2.0.0-alpha.4...v2.0.0-alpha.5) (2024-10-22)
 
 
