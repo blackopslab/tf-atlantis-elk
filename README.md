@@ -27,6 +27,15 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 
 See various inline `# TODO:` comments!
 
+## 🫡 Requirements
+
+* Any Kubernetes distro with a `kubectl` interface (e.g. k3s, minikube, Docker Desktop on WSL2 etc.)
+* `terraform`
+* `helm`
+* `python3`
+* `pip3`
+* `jq`
+
 ## 🛠️ Building and Running
 
 1. Please create `atlantis/.env` from template

@@ -1,16 +1,40 @@
 version: 3
+projects:
+- name: tf-atlantis-elk
+  dir: ./terraform
+  workflow: custom
 
 workflows:
-  default:
+  custom:
     plan:
       steps:
-        - run: |
-            GITHUB_USER=$(kubectl get secret atlantis-github-secrets -o jsonpath='{.data.GITHUB_USER}' | base64 --decode)
-            GITHUB_TOKEN=$(kubectl get secret atlantis-github-secrets -o jsonpath='{.data.GITHUB_TOKEN}' | base64 --decode)
-            GITHUB_SECRET=$(kubectl get secret atlantis-github-secrets -o jsonpath='{.data.GITHUB_SECRET}' | base64 --decode)
-            terraform plan -var "github_user=$GITHUB_USER" -var "github_token=$GITHUB_TOKEN" -var "github_secret=$GITHUB_SECRET"
-          dir: terraform/
+      - env:
+          name: GITHUB_USER
+          command: 'kubectl get secret atlantis-github-secrets -o jsonpath="{.data.GITHUB_USER}" | base64 --decode'
+      - env:
+          name: GITHUB_TOKEN
+          command: 'kubectl get secret atlantis-github-secrets -o jsonpath="{.data.GITHUB_TOKEN}" | base64 --decode'
+      - env:
+          name: GITHUB_SECRET
+          command: 'kubectl get secret atlantis-github-secrets -o jsonpath="{.data.GITHUB_SECRET}" | base64 --decode'
+      - env:
+          name: KUBE_CONFIG_PATH
+          value: "~/.kube/config"
+      - init
+      - plan
+
     apply:
       steps:
-        - run: terraform apply
-          dir: terraform/
+      - env:
+          name: GITHUB_USER
+          command: 'kubectl get secret atlantis-github-secrets -o jsonpath="{.data.GITHUB_USER}" | base64 --decode'
+      - env:
+          name: GITHUB_TOKEN
+          command: 'kubectl get secret atlantis-github-secrets -o jsonpath="{.data.GITHUB_TOKEN}" | base64 --decode'
+      - env:
+          name: GITHUB_SECRET
+          command: 'kubectl get secret atlantis-github-secrets -o jsonpath="{.data.GITHUB_SECRET}" | base64 --decode'
+      - env:
+          name: KUBE_CONFIG_PATH
+          value: "~/.kube/config"
+      - apply
