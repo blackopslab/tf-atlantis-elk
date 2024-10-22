@@ -38,9 +38,7 @@ install:
 	else \
 		echo "Activating the virtual environment..."; \
 		source .venv/bin/activate; \
-		echo ""; \
-		echo "Installing Atlantis..."; \
-		python3 src/main.py install "env/.env" --verbose; \
+		python3 src/main.py install --verbose; \
 		echo ""; \
 	fi
 	@echo ""
@@ -67,7 +65,7 @@ apply:
 	else \
 		echo "Activating the virtual environment..."; \
 		source .venv/bin/activate; \
-		python3 src/main.py apply "env/.env" --verbose; \
+		python3 src/main.py apply --verbose; \
 		echo ""; \
 	fi
 	@echo ""
@@ -78,7 +76,7 @@ destroy:
 	else \
 		echo "Activating the virtual environment..."; \
 		source .venv/bin/activate; \
-		python3 src/main.py destroy "env/.env" --verbose; \
+		python3 src/main.py destroy --verbose; \
 		echo ""; \
 	fi
 	@echo ""
@@ -98,6 +96,10 @@ alpha:
 	@echo "Generating changelog and tag..."
 	@commit-and-tag-version --prerelease alpha
 
+minor:
+	@echo "Generating changelog and tag..."
+	@commit-and-tag-version --prerelease alpha
+
 release:
 	@echo "Generating changelog and tag..."
-	@commit-and-tag-version
+	@commit-and-tag-version --release-as minor
