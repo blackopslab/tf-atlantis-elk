@@ -1,18 +1,20 @@
 SHELL := /bin/bash
-.PHONY: help config install expose clean prune apply destroy format alpha release
+.PHONY: help config install expose clean prune apply destroy force_rollout finalize_namespaces format alpha release
 
 help:
 	@echo "Makefile Commands:"
-	@echo "  config   - Set up the virtual environment."
-	@echo "  install  - Install the required Python packages."
-	@echo "  expose   - Exposes to the internet using cloudflared"
-	@echo "  clean    - Remove binary files."
-	@echo "  prune    - Prune downloaded and temporary files"
-	@echo "  apply    - Applie all Terraform manifests."
-	@echo "  destroy  - Destroy all Terraform resources."
-	@echo "  format   - Format Terraform files."
-	@echo "  alpha    - Generate changelog and create an alpha tag."
-	@echo "  release  - Generate changelog and create a release tag."
+	@echo "  config               - Set up the virtual environment."
+	@echo "  install              - Install the required Python packages."
+	@echo "  expose               - Exposes to the internet using cloudflared"
+	@echo "  clean                - Remove binary files."
+	@echo "  prune                - Prune downloaded and temporary files"
+	@echo "  apply                - Applie all Terraform manifests."
+	@echo "  destroy              - Destroy all Terraform resources."
+	@echo "  force_rollout        - Destroys namespaces manually."
+	@echo "  finalize_namespaces  - Destroys namespaces stuck in terminating state"
+	@echo "  format               - Format Terraform files."
+	@echo "  alpha                - Generate changelog and create an alpha tag."
+	@echo "  release              - Generate changelog and create a release tag."
 
 all: clean config install
 
@@ -80,6 +82,12 @@ destroy:
 		echo ""; \
 	fi
 	@echo ""
+
+force_rollout:
+	@bash src/scripts/force_rollout.sh
+
+finalize_namespaces:
+	@bash src/scripts/force_rollout.sh
 
 format:
 	@echo "Formatting Terraform files..."
