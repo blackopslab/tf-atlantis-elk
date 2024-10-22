@@ -23,6 +23,7 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 * Cloudflared
     * Automate execution with a wrapper that outputs the public url into a variable and injects it into helm/atlantis/values.yaml
     * Add to the beginning of `make all` and remind user to copy-paste to github webhook
+    * Wrap into a crd
 
 
 See various inline `# TODO:` comments!
