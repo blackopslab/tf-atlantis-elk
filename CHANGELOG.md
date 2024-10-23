@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0-alpha.10](///compare/v2.0.0-alpha.9...v2.0.0-alpha.10) (2024-10-23)
+
+
+### Bug Fixes
+
+* fix atlantis workflow 3289486
+
 ## [2.0.0-alpha.9](///compare/v2.0.0-alpha.8...v2.0.0-alpha.9) (2024-10-23)
 
 
