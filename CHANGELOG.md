@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0-alpha.12](///compare/v2.0.0-alpha.11...v2.0.0-alpha.12) (2024-10-23)
+
+
+### Bug Fixes
+
+* refactor atlantis.yaml 1b8c012
+
 ## [2.0.0-alpha.11](///compare/v2.0.0-alpha.10...v2.0.0-alpha.11) (2024-10-23)
 
 
