@@ -1,0 +1,14 @@
+[
+  {
+    "path_regex": "env/.env",
+    "file_permissions": 600
+  },
+  {
+    "path_regex": "bin/terraform/terraform",
+    "file_permissions": 755
+  },
+  {
+    "path_regex": "bin/linux-amd64/helm",
+    "file_permissions": 755
+  }
+]
