@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0-alpha.18](///compare/v2.0.0-alpha.17...v2.0.0-alpha.18) (2024-10-23)
+
+
+### Bug Fixes
+
+* restore new project configuration 404ebcd
+
 ## [2.0.0-alpha.17](///compare/v2.0.0-alpha.16...v2.0.0-alpha.17) (2024-10-23)
 
 
