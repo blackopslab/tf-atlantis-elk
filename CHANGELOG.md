@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. See [commit
 
 ## [2.0.0-alpha.13](///compare/v2.0.0-alpha.12...v2.0.0-alpha.13) (2024-10-23)
 
+
+### Features
+
+* **atlantis.yaml:** update workflow and workspace configuration 28f7181
+
+## [2.0.0-alpha.13](///compare/v2.0.0-alpha.12...v2.0.0-alpha.13) (2024-10-23)
+
 ## [2.0.0-alpha.12](///compare/v2.0.0-alpha.11...v2.0.0-alpha.12) (2024-10-23)
 
 
