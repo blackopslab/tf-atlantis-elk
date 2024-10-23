@@ -8,42 +8,43 @@ parallel_apply: true
 projects:
   - name: tf-atlantis-elk
     dir: ./terraform
-    workflow: custom
+    workspace: default
     autoplan:
       enabled: true
       when_modified:
         - "*.tf"
         - "*.tfvars"
         - ".terraform.lock.hcl"
+    workflow: custom
 
 workflows:
   custom:
     plan:
       steps:
-        - init:
-            extra_args:
-              - "-var"
-              - "github_user=${ATLANTIS_GH_USER}"
-              - "-var"
-              - "github_secret=${ATLANTIS_GH_SECRET}"
-              - "-var"
-              - "github_token=${ATLANTIS_GH_TOKEN}"
-        - plan:
-            extra_args:
-              - "-var"
-              - "github_user=${ATLANTIS_GH_USER}"
-              - "-var"
-              - "github_secret=${ATLANTIS_GH_SECRET}"
-              - "-var"
-              - "github_token=${ATLANTIS_GH_TOKEN}"
+      - init:
+          extra_args:
+            - "-var"
+            - "github_user=${ATLANTIS_GH_USER}"
+            - "-var"
+            - "github_secret=${ATLANTIS_GH_SECRET}"
+            - "-var"
+            - "github_token=${ATLANTIS_GH_TOKEN}"
+      - plan:
+          extra_args:
+            - "-var"
+            - "github_user=${ATLANTIS_GH_USER}"
+            - "-var"
+            - "github_secret=${ATLANTIS_GH_SECRET}"
+            - "-var"
+            - "github_token=${ATLANTIS_GH_TOKEN}"
 
     apply:
       steps:
-        - apply:
-            extra_args:
-              - "-var"
-              - "github_user=${ATLANTIS_GH_USER}"
-              - "-var"
-              - "github_secret=${ATLANTIS_GH_SECRET}"
-              - "-var"
-              - "github_token=${ATLANTIS_GH_TOKEN}"
+      - apply:
+          extra_args:
+            - "-var"
+            - "github_user=${ATLANTIS_GH_USER}"
+            - "-var"
+            - "github_secret=${ATLANTIS_GH_SECRET}"
+            - "-var"
+            - "github_token=${ATLANTIS_GH_TOKEN}"
