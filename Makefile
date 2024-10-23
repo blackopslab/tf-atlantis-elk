@@ -96,10 +96,14 @@ alpha:
 	@echo "Generating changelog and tag..."
 	@commit-and-tag-version --prerelease alpha
 
+beta:
+	@echo "Generating changelog and tag..."
+	@commit-and-tag-version --prerelease beta
+
 minor:
 	@echo "Generating changelog and tag..."
-	@commit-and-tag-version --prerelease alpha
+	@commit-and-tag-version --release-as minor
 
 release:
 	@echo "Generating changelog and tag..."
-	@commit-and-tag-version --release-as minor
+	@commit-and-tag-version
