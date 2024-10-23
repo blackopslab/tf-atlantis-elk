@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0-beta.3](///compare/v2.0.0-beta.2...v2.0.0-beta.3) (2024-10-23)
+
+
+### Bug Fixes
+
+* **atlantis.yaml:** remove lock=false 2f972af
+
 ## [2.0.0-beta.2](///compare/v2.0.0-beta.1...v2.0.0-beta.2) (2024-10-23)
 
 
