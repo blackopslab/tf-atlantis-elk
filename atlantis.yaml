@@ -25,13 +25,15 @@ workflows:
               }
             }' > ~/.terraform.d/credentials.tfrc.json
       - init:
-          extra_args:
-            - "-var"
-            - "github_user=${ATLANTIS_GH_USER}"
-            - "-var"
-            - "github_secret=${ATLANTIS_GH_SECRET}"
-            - "-var"
-            - "github_token=${ATLANTIS_GH_TOKEN}"
+          # extra_args:
+          #   - "-var"
+          #   - "github_user=${ATLANTIS_GH_USER}"
+          #   - "-var"
+          #   - "github_secret=${ATLANTIS_GH_SECRET}"
+          #   - "-var"
+          #   - "github_token=${ATLANTIS_GH_TOKEN}"
+          #   - "-var"
+          #   - "hcp_token=${HCP_TOKEN}"
       - plan:
           extra_args:
             - "-var"
@@ -40,6 +42,8 @@ workflows:
             - "github_secret=${ATLANTIS_GH_SECRET}"
             - "-var"
             - "github_token=${ATLANTIS_GH_TOKEN}"
+            - "-var"
+            - "hcp_token=${HCP_TOKEN}"
 
     apply:
       steps:
@@ -60,3 +64,5 @@ workflows:
             - "github_secret=${ATLANTIS_GH_SECRET}"
             - "-var"
             - "github_token=${ATLANTIS_GH_TOKEN}"
+            - "-var"
+            - "hcp_token=${HCP_TOKEN}"
