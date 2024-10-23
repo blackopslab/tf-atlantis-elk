@@ -16,7 +16,6 @@ workflows:
     plan:
       steps:
       - run:
-          name: Terraform Login
           command: |
             echo '{
               "credentials": {
@@ -45,7 +44,6 @@ workflows:
     apply:
       steps:
       - run:
-          name: Terraform Login
           command: |
             echo '{
               "credentials": {
