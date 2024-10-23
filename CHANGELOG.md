@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0-beta.5](///compare/v2.0.0-beta.4...v2.0.0-beta.5) (2024-10-23)
+
+
+### Features
+
+* Add Atlantis RBAC and permission check script a472709
+
 ## [2.0.0-beta.4](///compare/v2.0.0-beta.3...v2.0.0-beta.4) (2024-10-23)
 
 
