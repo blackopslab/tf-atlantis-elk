@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0-alpha.16](///compare/v2.0.0-alpha.12...v2.0.0-alpha.16) (2024-10-23)
+
+
+### Features
+
+* **atlantis.yaml:** change workspace from default to custom 55d9476
+* **atlantis.yaml:** update workflow and workspace configuration 28f7181
+
+## [2.0.0-alpha.13](///compare/v2.0.0-alpha.12...v2.0.0-alpha.13) (2024-10-23)
+
 ## [2.0.0-alpha.12](///compare/v2.0.0-alpha.11...v2.0.0-alpha.12) (2024-10-23)
 
 
