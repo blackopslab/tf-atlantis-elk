@@ -6,27 +6,26 @@
 
 ### 📋 Current Status
 
-* Added GitHub hook support
+* Atlantis up! ✅
 * Cluster exposed to the internet 🎉
 * Added cloudflare quick tunnel ✅
 * Added Makefile & Atlantis Helm Chart ✅
 * Added CLI tool to manage installation ✅
 
+For details, see [CHANGELOG.md](CHANGELOG.md)
+
 ### ⚒️ WIP
 
+* Adding remote state
 * Deploying monitoring solution
     * Prometheus
-        * Manual Helm deployment ✅
-        * Atlantis ⚒️
     * Opensearch
     * Kibana
     * Bonus: logstash
 
-For details, see [CHANGELOG.md](CHANGELOG.md)
-
 ### 🪲 Known Bugs
 
-* [Issue 32: Substitution error during `atlantis plan` phase](https://github.com/blackopslab/tf-atlantis-elk/issues/32)
+* [Issue 53: terraform has no state in local atlantis environment](https://github.com/blackopslab/tf-atlantis-elk/issues/53)
 
 ### 🧑‍🏭 Future Improvements
 
@@ -120,6 +119,15 @@ Commands:
 
 * ```bash
     make alpha # -> releases and tags as alpha, used to test github actions
+    ```
+
+
+* ```bash
+    make beta # -> releases and tags as beta
+    ```
+
+* ```bash
+    make minor # -> releases and tags as minor
     ```
 
 * ```bash
