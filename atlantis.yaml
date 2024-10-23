@@ -21,11 +21,29 @@ workflows:
     plan:
       steps:
         - init:
-            extra_args: ["-var", "github_user=${ATLANTIS_GH_USER}", "-var", "github_secret=${ATLANTIS_GH_SECRET}", "-var", "github_token=${ATLANTIS_GH_TOKEN}"]
+            extra_args:
+              - "-var"
+              - "github_user=${ATLANTIS_GH_USER}"
+              - "-var"
+              - "github_secret=${ATLANTIS_GH_SECRET}"
+              - "-var"
+              - "github_token=${ATLANTIS_GH_TOKEN}"
         - plan:
-            extra_args: ["-var", "github_user=${ATLANTIS_GH_USER}", "-var", "github_secret=${ATLANTIS_GH_SECRET}", "-var", "github_token=${ATLANTIS_GH_TOKEN}"]
+            extra_args:
+              - "-var"
+              - "github_user=${ATLANTIS_GH_USER}"
+              - "-var"
+              - "github_secret=${ATLANTIS_GH_SECRET}"
+              - "-var"
+              - "github_token=${ATLANTIS_GH_TOKEN}"
 
     apply:
       steps:
         - apply:
-            extra_args: ["-var", "github_user=${ATLANTIS_GH_USER}", "-var", "github_secret=${ATLANTIS_GH_SECRET}", "-var", "github_token=${ATLANTIS_GH_TOKEN}"]
+            extra_args:
+              - "-var"
+              - "github_user=${ATLANTIS_GH_USER}"
+              - "-var"
+              - "github_secret=${ATLANTIS_GH_SECRET}"
+              - "-var"
+              - "github_token=${ATLANTIS_GH_TOKEN}"
