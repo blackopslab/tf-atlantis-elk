@@ -9,11 +9,22 @@ projects:
   - name: tf-atlantis-elk
     dir: ./terraform
     workflow: custom
+    workspace: tf-atlantis-elk
 
 workflows:
   custom:
     plan:
       steps:
+      - run:
+          name: Terraform Login
+          command: |
+            echo '{
+              "credentials": {
+                "app.terraform.io": {
+                  "token": "'${HCP_TOKEN}'"
+                }
+              }
+            }' > ~/.terraform.d/credentials.tfrc.json
       - init:
           extra_args:
             - "-var"
@@ -33,6 +44,16 @@ workflows:
 
     apply:
       steps:
+      - run:
+          name: Terraform Login
+          command: |
+            echo '{
+              "credentials": {
+                "app.terraform.io": {
+                  "token": "'${HCP_TOKEN}'"
+                }
+              }
+            }' > ~/.terraform.d/credentials.tfrc.json
       - apply:
           extra_args:
             - "-var"

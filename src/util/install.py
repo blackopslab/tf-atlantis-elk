@@ -108,19 +108,23 @@ def _set_kube_config_path(conf_path: str) -> None:
 
 
 def _run_terraform_init() -> None:
-    _run_command("terraform init -var-file='variables.tfvars'")
+    _run_command("terraform init -lock=false -var-file='variables.tfvars'")
 
 
 def _run_terraform_plan() -> None:
-    _run_command("terraform plan -var-file='variables.tfvars'")
+    _run_command("terraform plan -lock=false -var-file='variables.tfvars'")
 
 
 def _run_terraform_apply() -> None:
-    _run_command("terraform apply -auto-approve -var-file='variables.tfvars'")
+    _run_command(
+        "terraform apply -lock=false -auto-approve -var-file='variables.tfvars'"
+    )
 
 
 def _run_terraform_destroy() -> None:
-    _run_command("terraform destroy -auto-approve -var-file='variables.tfvars'")
+    _run_command(
+        "terraform destroy -lock=false -auto-approve -var-file='variables.tfvars'"
+    )
 
 
 def _map_binaries() -> List[Tuple[str, str, str, str, str]]:

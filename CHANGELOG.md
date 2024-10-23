@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0-beta.1](///compare/v2.0.0-beta.0...v2.0.0-beta.1) (2024-10-23)
+
+
+### Features
+
+* add Terraform Cloud login and disable lock in Terraform commands cafaf48
+* **terraform:** add cloud configuration and HCP_TOKEN to helm_release 10ead01
+
+
+### Bug Fixes
+
+* add missing variables.tfvars.template 3a18236
+
 ## [2.0.0-beta.0](///compare/v2.0.0-alpha.18...v2.0.0-beta.0) (2024-10-23)
 
 
