@@ -8,7 +8,7 @@ parallel_apply: true
 projects:
   - name: tf-atlantis-elk
     dir: ./terraform
-    workspace: default
+    workspace: custom
     autoplan:
       enabled: true
       when_modified:
