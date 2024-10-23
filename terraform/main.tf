@@ -42,7 +42,7 @@ resource "helm_release" "atlantis" {
   }
 
   set {
-    name = "environmentRaw.name('HCP_TOKEN')"
+    name  = "environmentRaw[0].value"
     value = var.hcp_token
   }
 }

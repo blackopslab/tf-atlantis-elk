@@ -12,3 +12,8 @@ variable "github_secret" {
   description = "Webhook secret for GitHub"
   type        = string
 }
+
+variable "hcp_token" {
+  description = "Terraform Cloud token"
+  type        = string
+}
