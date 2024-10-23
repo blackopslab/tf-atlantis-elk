@@ -5,6 +5,11 @@ delete_source_branch_on_merge: false
 parallel_plan: true
 parallel_apply: true
 
+projects:
+  - name: tf-atlantis-elk
+    dir: ./terraform
+    workflow: custom
+
 workflows:
   custom:
     plan:
