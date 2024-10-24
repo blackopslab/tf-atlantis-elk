@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0-beta.6](///compare/v2.0.0-beta.5...v2.0.0-beta.6) (2024-10-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* **terraform:** add sensitive attribute to variables
+
+### Features
+
+* **terraform:** add sensitive attribute to variables 188ecb6
+
 ## [2.0.0-beta.5](///compare/v2.0.0-beta.4...v2.0.0-beta.5) (2024-10-23)
 
 
