@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0-beta.7](///compare/v2.0.0-beta.6...v2.0.0-beta.7) (2024-10-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* Update Atlantis RBAC and add sensitive outputs in Terraform
+
+### Features
+
+* Update Atlantis RBAC and add sensitive outputs in Terraform 4649a0d
+
 ## [2.0.0-beta.6](///compare/v2.0.0-beta.5...v2.0.0-beta.6) (2024-10-24)
 
 
