@@ -1,9 +1,8 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
-  namespace: atlantis
-  name: atlantis-role
+  name: atlantis-cluster-role
 rules:
 - apiGroups: [""]
-  resources: ["namespaces", "pods", "services", "secrets", "configmaps"]
+  resources: ["*"]
   verbs: ["get", "list", "watch", "create", "update", "delete"]
