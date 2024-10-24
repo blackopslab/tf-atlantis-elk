@@ -57,6 +57,7 @@ prune:
 	@rm -rf .venv
 	@rm -rf terraform/.terraform*
 	@rm -rf terraform/*.tfstate*
+	@rm -rf *.tfstate*
 	@echo ""
 
 apply:
