@@ -56,8 +56,8 @@ prune:
 	@rm -rf .venv
 	@rm -rf deploy/atlantis/terraform/.terraform*
 	@rm -rf deploy/atlantis/terraform/*.tfstate*
-	@rm -rf deploy/openssearch/terraform/.terraform*
-	@rm -rf deploy/opensearch/terraform/*.tfstate*
+	@rm -rf deploy/elk/terraform/.terraform*
+	@rm -rf deploy/elk/terraform/*.tfstate*
 	@rm -rf *.tfstate*
 	@echo ""
 
