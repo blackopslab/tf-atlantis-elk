@@ -46,7 +46,6 @@ workflows:
             - "github_token=${ATLANTIS_GH_TOKEN}"
             - "-var"
             - "hcp_token=${HCP_TOKEN}"
-          output: hide
 
     apply:
       steps:
@@ -71,4 +70,3 @@ workflows:
             - "github_token=${ATLANTIS_GH_TOKEN}"
             - "-var"
             - "hcp_token=${HCP_TOKEN}"
-        output: hide
