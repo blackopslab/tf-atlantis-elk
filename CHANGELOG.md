@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.1.0-alpha.0](///compare/v3.0.0...v3.1.0-alpha.0) (2024-10-25)
+
+
+### Features
+
+* **monitoring:** add values.yaml for prometheus helm chart d010d83
+* Refactor opensearch to elk 724364a
+
 ## [3.0.0](///compare/v3.0.0-alpha.2...v3.0.0) (2024-10-25)
 
 

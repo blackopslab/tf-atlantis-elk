@@ -10,5 +10,5 @@ resource "helm_release" "opensearch" {
   chart      = "opensearch"
   namespace  = "monitoring"
 
-  values = [file("${path.module}/../helm/values.yaml")]
+  values = [file("${path.module}/../helm/opensearch.yaml")]
 }
