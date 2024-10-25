@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0-beta.8](///compare/v2.0.0-beta.7...v2.0.0-beta.8) (2024-10-25)
+
+
+### Features
+
+* **atlantis.yaml:** hide output in workflows 99bf575
+
 ## [2.0.0-beta.7](///compare/v2.0.0-beta.6...v2.0.0-beta.7) (2024-10-24)
 
 
