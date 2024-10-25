@@ -6,12 +6,13 @@
 
 ### 📋 Current Status
 
-* Added remote state
-Atlantis up! ✅
-* Cluster exposed to the internet 🎉
-* Added cloudflare quick tunnel ✅
-* Added Makefile & Atlantis Helm Chart ✅
-* Added CLI tool to manage installation ✅
+* Added RBAC management to CLI Tool
+* Working Atlantis Deployments
+* Atlantis up /w remote state
+* Cluster exposed to the internet
+* Added cloudflare quick tunnel
+* Added Makefile & Atlantis Helm Chart
+* Added CLI tool to manage installation
 
 For details, see [CHANGELOG.md](CHANGELOG.md)
 
@@ -25,8 +26,6 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 
 ### 🪲 Known Bugs
 
-* [Issue 53: terraform has no state in local atlantis environment](https://github.com/blackopslab/tf-atlantis-elk/issues/53)
-* `make init` does not work from CLI tool and currently needs to be run manually `cd terraform && terraform init`
 
 ### 🧑‍🏭 Future Improvements
 
