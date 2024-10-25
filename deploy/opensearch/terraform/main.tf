@@ -10,5 +10,5 @@
 #   chart      = "opensearch"
 #   namespace  = "monitoring"
 
-#   values = [file("${path.module}/../helm/opensearch/values.yaml")]
+#   values = [file("${path.module}/../helm/values.yaml")]
 # }

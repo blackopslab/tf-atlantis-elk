@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.0.0-alpha.1](///compare/v3.0.0-alpha.0...v3.0.0-alpha.1) (2024-10-25)
+
+
+### Features
+
+* **atlantis.yaml:** change opensearch directory path fa3bb91
+* Update lifecycle rules in Atlantis Terraform configuration a098f47
+
 ## [3.0.0-alpha.0](///compare/v2.0.0-beta.8...v3.0.0-alpha.0) (2024-10-25)
 
 

@@ -10,13 +10,12 @@ resource "kubernetes_namespace" "atlantis" {
   metadata {
     name = "atlantis"
   }
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes  = all
+  }
 }
 
-# resource "kubernetes_namespace" "monitoring" {
-#   metadata {
-#     name = "monitoring"
-#   }
-# }
 
 resource "helm_release" "atlantis" {
   name       = "atlantis"
@@ -25,6 +24,11 @@ resource "helm_release" "atlantis" {
   namespace  = "atlantis"
 
   values = [file("${path.module}/../helm/values.yaml")]
+
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes  = all
+  }
 
   set {
     name  = "github.user"
@@ -46,12 +50,3 @@ resource "helm_release" "atlantis" {
     value = var.hcp_token
   }
 }
-
-# resource "helm_release" "opensearch" {
-#   name       = "opensearch"
-#   repository = "https://charts.bitnami.com/bitnami"
-#   chart      = "opensearch"
-#   namespace  = "monitoring"
-
-#   values = [file("${path.module}/../helm/opensearch/values.yaml")]
-# }
