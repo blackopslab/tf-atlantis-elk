@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.0.0](///compare/v3.0.0-alpha.2...v3.0.0) (2024-10-25)
+
+
+### Features
+
+* **opensearch:** enable kubernetes namespace and helm release 7c0e9d1
+* Update file permissions for untrack_atlantis_terraform.sh script d46f3ed
+
 ## [3.0.0-alpha.2](///compare/v3.0.0-alpha.1...v3.0.0-alpha.2) (2024-10-25)
 
 
