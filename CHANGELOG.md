@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file. See [commit
 
 ## [3.1.0-beta.0](///compare/v3.1.0-alpha.0...v3.1.0-beta.0) (2024-10-25)
 
+### Features
+
+* refactor: Update Terraform commands and refactor Python scripts
+*
+
 ## [3.1.0-alpha.0](///compare/v3.0.0...v3.1.0-alpha.0) (2024-10-25)
 
 
@@ -11,14 +16,6 @@ All notable changes to this project will be documented in this file. See [commit
 
 * **monitoring:** add values.yaml for prometheus helm chart d010d83
 * Refactor opensearch to elk 724364a
-
-## [3.0.0](///compare/v3.0.0-alpha.2...v3.0.0) (2024-10-25)
-
-
-### Features
-
-* **opensearch:** enable kubernetes namespace and helm release 7c0e9d1
-* Update file permissions for untrack_atlantis_terraform.sh script d46f3ed
 
 ## [3.0.0-alpha.2](///compare/v3.0.0-alpha.1...v3.0.0-alpha.2) (2024-10-25)
 
