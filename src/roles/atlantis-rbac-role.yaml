@@ -3,6 +3,6 @@ kind: ClusterRole
 metadata:
   name: atlantis-cluster-role
 rules:
-- apiGroups: [""]
+- apiGroups: ["*"]
   resources: ["*"]
-  verbs: ["get", "list", "watch", "create", "update", "delete"]
+  verbs: ["*"]
