@@ -14,19 +14,6 @@ projects:
 
 workflows:
   custom:
-    init:
-      steps:
-      - run:
-          command: |
-            echo '{
-              "credentials": {
-                "app.terraform.io": {
-                  "token": "'${HCP_TOKEN}'"
-                }
-              }
-            }' > ~/.terraform.d/credentials.tfrc.json
-          output: hide
-
     plan:
       steps:
       - run:
