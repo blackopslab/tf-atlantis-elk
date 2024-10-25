@@ -6,7 +6,8 @@
 
 ### 📋 Current Status
 
-* Atlantis up! ✅
+* Added remote state
+Atlantis up! ✅
 * Cluster exposed to the internet 🎉
 * Added cloudflare quick tunnel ✅
 * Added Makefile & Atlantis Helm Chart ✅
@@ -16,7 +17,6 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 
 ### ⚒️ WIP
 
-* Adding remote state
 * Deploying monitoring solution
     * Prometheus
     * Opensearch
@@ -33,6 +33,8 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 * Add logging
 * Add CLI tool tests
 * Add CLI tool inline documentation
+* Refactor RBAC scripts to tool as CLI tool functitons
+* Refactor src/scripts/untrack_atlantis_terraform.sh as CLI tool functiton
 * Cloudflared
     * Automate execution and remind user to copy-paste to github webhook
     * Wrap into a crd
@@ -51,29 +53,31 @@ See various inline `# TODO:` comments!
 
 ## 🛠️ Building and Running
 
-1. Please create `terraform/variables.tfvars` from template
+1. Please create `deploy/atlantis/terraform/variables.tfvars` from template
     ```bash
-    cp terraform/variables.tfvars.template terraform/variables.tfvars
+    cp deploy/atlantis/terraform/variables.tfvars.template deploy/atlantis/terraform/variables.tfvars
     ```
     and fill in all fields appropriately.
 
-2. Generate execution environment:
-    ```bash
-    make config
-    ```
-
-3. Deploy Atlantis on the cluster, using Terraform and the credentials from `env/.env`:
-    ```bash
-    make install
-    ```
-or just run
+2. Deploy Atlantis
 
 ```bash
 make all # -> runs clean, config, install
 ```
-`make all` consists of `make clean | config | install`.
-Warning: `make clean` will destroy all Terraform resources and reset your local repo and python environment.
-The included commands can also be run manually.
+Note: `make all` consists of `make clean | config | install`. See Makefile.
+
+
+4. Exclude Atlantis from Terraform tracking
+   ```bash
+    cd deploy/atlantis/terraform
+    src/scripts/untrack_atlantis_terraform.sh
+   ```
+
+5. Add RBAC roles for Atlantis
+   ```
+   kubectl apply -f
+   ```
+
 
 ### Expose
 
@@ -97,6 +101,7 @@ should return a *quick url* with public access to the Atlantis entry point, e.g.
 ### Clean
 
 `make clean` runs `make prune` on top of `make destroy`.
+Warning: `make clean` will destroy all Terraform resources and reset your local repo and python environment.
 
 ### Rollout
 
@@ -104,10 +109,12 @@ Just run `make all` on top of the running cluster to wipe it and deploy all reso
 
 Info: During tests `make all` performed well most of the time, but namespace deletion tended to hang at the `Terminating` phase.
 To quickly kill the process, you can run the following finalizer script:
+
     ```bash
-    src/scripts/finalize_namespace.sh atlantis
+    make force_rollout.sh
+    src/scripts/finalize_namespace.sh
     ```
-   Warning: all unmanaged namespace resources that are still running will become orphans.
+   Warning: all unmanaged namespace resources that are still running will become orphans. See the output of `src/scripts/finalize_namespace.sh`
    Please check that especially `pvs` and `pvcs` have been successfully terminated. Please force delete manually where needed.
 
 
