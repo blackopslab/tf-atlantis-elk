@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=values.schema.json
+# yaml-language-server: $schema=prometheus.schema.json
 # Default values for prometheus.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
@@ -16,7 +16,7 @@ imagePullSecrets: []
 ##
 serviceAccounts:
   server:
-    create: true
+    create: false
     name: ""
     annotations: {}
 
@@ -143,7 +143,7 @@ server:
   ##
   ## You MUST also set namespaces to the ones you have access to and want monitored by Prometheus.
   ##
-  # useExistingClusterRoleName: nameofclusterrole
+  useExistingClusterRoleName: atlantis
 
   ## If set it will override prometheus.server.fullname value for ClusterRole and ClusterRoleBinding
   ##
@@ -221,7 +221,7 @@ server:
 
   ## External URL which can access prometheus
   ## Maybe same with Ingress host name
-  baseURL: ""
+  baseURL: "https://mechanical-complete-jvc-thousands.trycloudflare.com"
 
   ## Additional server container environment variables
   ##
@@ -606,9 +606,9 @@ server:
       servicePort: 80
       ## Enable gRPC port on service to allow auto discovery with thanos-querier
       gRPC:
-        enabled: false
+        enabled: true
         servicePort: 10901
-        # nodePort: 10901
+        nodePort: 30901
 
     ## Statefulset's persistent volume claim retention policy
     ## pvcDeleteOnStsDelete and pvcDeleteOnStsScale determine whether
@@ -616,8 +616,8 @@ server:
     ## and deleting statefulset, respectively. Requires 1.27.0+.
     ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention
     ##
-    pvcDeleteOnStsDelete: false
-    pvcDeleteOnStsScale: false
+    pvcDeleteOnStsDelete: true
+    pvcDeleteOnStsScale: true
 
   ## Prometheus server readiness and liveness probe initial delay and timeout
   ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
@@ -722,7 +722,7 @@ server:
     gRPC:
       enabled: false
       servicePort: 10901
-      # nodePort: 10901
+      nodePort: 30901
 
     ## If using a statefulSet (statefulSet.enabled=true), configure the
     ## service to connect to a specific replica to have a consistent view

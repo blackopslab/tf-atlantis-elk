@@ -12,3 +12,12 @@ resource "helm_release" "opensearch" {
 
   values = [file("${path.module}/../helm/opensearch.yaml")]
 }
+
+resource "helm_release" "prometheus" {
+  name       = "prometheus"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "prometheus"
+  namespace  = "monitoring"
+
+  values = [file("${path.module}/../helm/prometheus.yaml")]
+}
