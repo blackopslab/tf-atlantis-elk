@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.2.0](///compare/v3.1.0...v3.2.0) (2024-10-25)
+
+
+### Bug Fixes
+
+* correct function call in install.py 2da5f0d
+
 ## [3.1.0](///compare/v3.1.0-beta.0...v3.1.0) (2024-10-25)
 
 
