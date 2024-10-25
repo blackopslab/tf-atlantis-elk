@@ -34,6 +34,8 @@ workflows:
           #   - "github_token=${ATLANTIS_GH_TOKEN}"
           #   - "-var"
           #   - "hcp_token=${HCP_TOKEN}"
+          output: hide
+
       - plan:
           extra_args:
             - "-var"
@@ -44,6 +46,7 @@ workflows:
             - "github_token=${ATLANTIS_GH_TOKEN}"
             - "-var"
             - "hcp_token=${HCP_TOKEN}"
+          output: hide
 
     apply:
       steps:
@@ -56,6 +59,8 @@ workflows:
                 }
               }
             }' > ~/.terraform.d/credentials.tfrc.json
+          output: hide
+
       - apply:
           extra_args:
             - "-var"
@@ -66,3 +71,4 @@ workflows:
             - "github_token=${ATLANTIS_GH_TOKEN}"
             - "-var"
             - "hcp_token=${HCP_TOKEN}"
+        output: hide
