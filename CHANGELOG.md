@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.0.0-alpha.0](///compare/v2.0.0-beta.8...v3.0.0-alpha.0) (2024-10-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* relocate Atlantis and OpenSearch Helm and Terraform files
+
+* relocate Atlantis and OpenSearch Helm and Terraform files f658253
+
+
+### Features
+
+* **opensearch:** add terraform configuration for opensearch deployment c1ef044
+* Refactor terraform and cleanup scripts 0ccc01b
+
 ## [2.0.0-beta.8](///compare/v2.0.0-beta.7...v2.0.0-beta.8) (2024-10-25)
 
 

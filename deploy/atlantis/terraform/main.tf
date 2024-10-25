@@ -24,7 +24,7 @@ resource "helm_release" "atlantis" {
   chart      = "atlantis"
   namespace  = "atlantis"
 
-  values = [file("${path.module}/../helm/atlantis/values.yaml")]
+  values = [file("${path.module}/../helm/values.yaml")]
 
   set {
     name  = "github.user"
