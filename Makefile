@@ -52,11 +52,12 @@ clean: destroy prune
 
 prune:
 	@echo "Pruning files..."
-#	@rm -rf bin/*
 	@rm -rf tmp/*
 	@rm -rf .venv
-	@rm -rf terraform/.terraform*
-	@rm -rf terraform/*.tfstate*
+	@rm -rf deploy/atlantis/terraform/.terraform*
+	@rm -rf deploy/atlantis/terraform/*.tfstate*
+	@rm -rf deploy/openssearch/terraform/.terraform*
+	@rm -rf deploy/opensearch/terraform/*.tfstate*
 	@rm -rf *.tfstate*
 	@echo ""
 

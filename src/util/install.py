@@ -139,14 +139,14 @@ def _terraform_operation(operation: str) -> str:
     try:
         print(f"\n{operation.capitalize()} all Terraform resources...")
         _set_kube_config_path("~/.kube/config/")
-        _change_working_directory("./terraform/")
+        _change_working_directory("./deploy/atlantis/terraform/")
 
         if operation == "apply":
             _run_terraform_apply()
         elif operation == "destroy":
             _run_terraform_destroy()
 
-        _change_working_directory("../")
+        _change_working_directory("../../../")
         return f"'terraform {operation}' completed successfully."
 
     except Exception as e:
@@ -180,11 +180,11 @@ def t_install() -> str:
     try:
         print("\n2. INSTALLING...")
         _set_kube_config_path("~/.kube/config/")
-        _change_working_directory("./terraform/")
+        _change_working_directory("./deploy/atlantis/terraform/")
         _run_terraform_init()
         _run_terraform_plan()
         _run_terraform_apply()
-        _change_working_directory("../")
+        _change_working_directory("../../../")
 
     except Exception as e:
         return f"Error during installation: {e}"
