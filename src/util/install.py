@@ -253,7 +253,7 @@ def install_atlantis() -> str:
 
         _create_rbac_cluster_role()
 
-        _untrack_atlantis_resources
+        _untrack_atlantis_resources()
 
     except Exception as e:
         return f"Error during installation: {e}"
