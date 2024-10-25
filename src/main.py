@@ -1,7 +1,6 @@
 import sys, click
-from util.install import t_install as env_install
-from util.install import t_apply as env_apply
-from util.install import t_destroy as env_destroy
+from util.install import install_atlantis
+from util.install import run_terraform_apply, run_terraform_destroy, run_terraform_init
 
 
 @click.group()
@@ -13,59 +12,43 @@ def main():
 
 
 @main.command()
-@click.option("--verbose", "-v", is_flag=True, help="Prints installation output.")
-def install(verbose):
-    """Installs Atlantis from GitHub credentials provided by terraform/variables.tfvars.
+def install():
+    """Installs Atlantis from GitHub credentials provided by ./deploy/atlantis/terraform/variables.tfvars.
 
     Example:
-        python main.py install --verbose
+        python main.py install
     """
-    match verbose:
-        case True:
-            click.echo("Verbose mode is enabled.")
-            click.echo(env_install())
-
-        case False:
-            click.echo("Verbose mode is disabled.")
-            env_install()
+    click.echo(install_atlantis())
 
 
 @main.command()
-@click.option("--verbose", "-v", is_flag=True, help="Prints 'terraform apply' output.")
-def apply(verbose):
-    """Creates all Terraform resources in ./terraform/
+def init():
+    """Initlializas all Terraform resources in ./deploy/atlantis/terraform/
 
     Example:
-        python main.py apply --verbose
+        python main.py init
     """
-    match verbose:
-        case True:
-            click.echo("Verbose mode is enabled.")
-            click.echo(env_apply())
-
-        case False:
-            click.echo("Verbose mode is disabled.")
-            env_apply()
+    click.echo(run_terraform_init())
 
 
 @main.command()
-@click.option(
-    "--verbose", "-v", is_flag=True, help="Prints 'terraform destroy' output."
-)
-def destroy(verbose):
-    """Destroys all Terraform resources in ./terraform/
+def apply():
+    """Creates all Terraform resources in ./deploy/atlantis/terraform/
 
     Example:
-        python main.py destroy --verbose
+        python main.py apply
     """
-    match verbose:
-        case True:
-            click.echo("Verbose mode is enabled.")
-            click.echo(env_destroy())
+    click.echo(run_terraform_apply())
 
-        case False:
-            click.echo("Verbose mode is disabled.")
-            env_destroy()
+
+@main.command()
+def destroy():
+    """Destroys all Terraform resources in ./deploy/atlantis/terraform/
+
+    Example:
+        python main.py destroy
+    """
+    click.echo(run_terraform_destroy())
 
 
 @main.command()
@@ -75,13 +58,16 @@ def version():
     Example:
         python main.py version
     """
-    click.echo("tf-atlantis-cli version: 3.0.0")
+    click.echo("tf-atlantis-cli version: 4.0.0")
 
 
 if __name__ == "__main__":
     # show help if no args
     if len(sys.argv) == 1:
         click.echo("No command provided. Use one of the following:")
+        click.echo("  install             Full installation script.")
+        click.echo("  apply               Apply Terraform manifests.")
+        click.echo("  destroy             Destroy Terraform manifests.")
         click.echo("  version             Show the version of the CLI tool.")
         click.echo("\nFor more information, run 'python main.py <command> --help'.")
     else:
