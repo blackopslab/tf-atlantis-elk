@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.0.0-alpha.2](///compare/v3.0.0-alpha.1...v3.0.0-alpha.2) (2024-10-25)
+
+
+### Features
+
+* Add untrack_atlantis_terraform.sh script a618e4e
+
 ## [3.0.0-alpha.1](///compare/v3.0.0-alpha.0...v3.0.0-alpha.1) (2024-10-25)
 
 
