@@ -8,7 +8,7 @@ parallel_apply: true
 projects:
 
   - name: opensearch
-    dir: ./terraform/opensearch
+    dir: ./deploy/opensearch/terraform
     workflow: custom
     workspace: tf-atlantis-elk
 
