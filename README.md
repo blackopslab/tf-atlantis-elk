@@ -31,9 +31,6 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 
 * Add logging
 * Add CLI tool tests
-* Add CLI tool inline documentation
-* Refactor RBAC scripts to tool as CLI tool functitons
-* Refactor src/scripts/untrack_atlantis_terraform.sh as CLI tool functiton
 * Cloudflared
     * Automate execution and remind user to copy-paste to github webhook
     * Wrap into a crd
