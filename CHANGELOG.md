@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.1.0-alpha.1](///compare/v3.1.0-alpha.0...v3.1.0-alpha.1) (2024-10-25)
+
+
+### Features
+
+* Added new prometheus.schema.json file 8bca375
+
 ## [3.1.0-alpha.0](///compare/v3.0.0...v3.1.0-alpha.0) (2024-10-25)
 
 
