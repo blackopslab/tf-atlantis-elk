@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.1.0-alpha.3](///compare/v3.1.0-alpha.2...v3.1.0-alpha.3) (2024-10-25)
+
+
+### Features
+
+* **atlantis.yaml:** change project name from opensearch to prometheus-elk f6e1afd
+
 ## [3.1.0-alpha.2](///compare/v3.1.0-alpha.1...v3.1.0-alpha.2) (2024-10-25)
 
 
