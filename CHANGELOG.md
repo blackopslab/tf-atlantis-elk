@@ -2,6 +2,151 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0-beta.8](///compare/v2.0.0-beta.7...v2.0.0-beta.8) (2024-10-25)
+
+
+### Features
+
+* **atlantis.yaml:** hide output in workflows 99bf575
+
+## [2.0.0-beta.7](///compare/v2.0.0-beta.6...v2.0.0-beta.7) (2024-10-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* Update Atlantis RBAC and add sensitive outputs in Terraform
+
+### Features
+
+* Update Atlantis RBAC and add sensitive outputs in Terraform 4649a0d
+
+## [2.0.0-beta.6](///compare/v2.0.0-beta.5...v2.0.0-beta.6) (2024-10-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* **terraform:** add sensitive attribute to variables
+
+### Features
+
+* **terraform:** add sensitive attribute to variables 188ecb6
+
+## [2.0.0-beta.5](///compare/v2.0.0-beta.4...v2.0.0-beta.5) (2024-10-23)
+
+
+### Features
+
+* Add Atlantis RBAC and permission check script a472709
+
+## [2.0.0-beta.4](///compare/v2.0.0-beta.3...v2.0.0-beta.4) (2024-10-23)
+
+
+### Features
+
+* **atlantis.yaml:** add hcp_token to extra_args in init, plan and apply steps dc87eef
+
+## [2.0.0-beta.3](///compare/v2.0.0-beta.2...v2.0.0-beta.3) (2024-10-23)
+
+
+### Bug Fixes
+
+* **atlantis.yaml:** remove lock=false 2f972af
+
+## [2.0.0-beta.2](///compare/v2.0.0-beta.1...v2.0.0-beta.2) (2024-10-23)
+
+
+### Bug Fixes
+
+* **atlantis.yaml:** remove wrong keys 1762909
+
+## [2.0.0-beta.1](///compare/v2.0.0-beta.0...v2.0.0-beta.1) (2024-10-23)
+
+
+### Features
+
+* add Terraform Cloud login and disable lock in Terraform commands cafaf48
+* **terraform:** add cloud configuration and HCP_TOKEN to helm_release 10ead01
+
+
+### Bug Fixes
+
+* add missing variables.tfvars.template 3a18236
+
+## [2.0.0-beta.0](///compare/v2.0.0-alpha.18...v2.0.0-beta.0) (2024-10-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* **Atlantis:** update orgAllowlist in values.yaml
+
+### Features
+
+* **Makefile:** add beta release and update minor and release commands da0c5bb
+
+
+### Bug Fixes
+
+* **Atlantis:** update orgAllowlist in values.yaml 4927b3c
+
+## [2.0.0-alpha.18](///compare/v2.0.0-alpha.17...v2.0.0-alpha.18) (2024-10-23)
+
+
+### Bug Fixes
+
+* restore new project configuration 404ebcd
+
+## [2.0.0-alpha.17](///compare/v2.0.0-alpha.16...v2.0.0-alpha.17) (2024-10-23)
+
+
+### Bug Fixes
+
+* Update atlantis and terraform configurations e332b33
+
+## [2.0.0-alpha.16](///compare/v2.0.0-alpha.12...v2.0.0-alpha.16) (2024-10-23)
+
+
+### Features
+
+* **atlantis.yaml:** change workspace from default to custom 55d9476
+* **atlantis.yaml:** update workflow and workspace configuration 28f7181
+
+## [2.0.0-alpha.13](///compare/v2.0.0-alpha.12...v2.0.0-alpha.13) (2024-10-23)
+
+## [2.0.0-alpha.12](///compare/v2.0.0-alpha.11...v2.0.0-alpha.12) (2024-10-23)
+
+
+### Bug Fixes
+
+* refactor atlantis.yaml 1b8c012
+
+## [2.0.0-alpha.11](///compare/v2.0.0-alpha.10...v2.0.0-alpha.11) (2024-10-23)
+
+
+### Bug Fixes
+
+* fix atlantis workflow 40db816
+
+## [2.0.0-alpha.10](///compare/v2.0.0-alpha.9...v2.0.0-alpha.10) (2024-10-23)
+
+
+### Bug Fixes
+
+* fix atlantis workflow 3289486
+
+## [2.0.0-alpha.9](///compare/v2.0.0-alpha.8...v2.0.0-alpha.9) (2024-10-23)
+
+
+### Features
+
+* **atlantis.yaml:** update project configuration and workflow 9c9ade6
+
+## [2.0.0-alpha.8](///compare/v2.0.0-alpha.7...v2.0.0-alpha.8) (2024-10-23)
+
+
+### Features
+
+* **atlantis.yaml:** update configuration settings and workflow steps 720b5dd
+
 ## [2.0.0-alpha.7](///compare/v2.0.0-alpha.6...v2.0.0-alpha.7) (2024-10-22)
 
 

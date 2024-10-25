@@ -1,8 +1,11 @@
-provider "kubernetes" {
-  config_path   = "~/.kube/config"
-  config_context = ""
+terraform {
+  cloud {
+    organization = "vdistefano-studio"
+    workspaces {
+      name = "tf-atlantis-elk"
+    }
+  }
 }
-
 resource "kubernetes_namespace" "atlantis" {
   metadata {
     name = "atlantis"
@@ -23,7 +26,7 @@ resource "helm_release" "atlantis" {
 
   values = [file("${path.module}/../helm/atlantis/values.yaml")]
 
-    set {
+  set {
     name  = "github.user"
     value = var.github_user
   }
@@ -36,6 +39,11 @@ resource "helm_release" "atlantis" {
   set {
     name  = "github.secret"
     value = var.github_secret
+  }
+
+  set {
+    name  = "environmentRaw[0].value"
+    value = var.hcp_token
   }
 }
 

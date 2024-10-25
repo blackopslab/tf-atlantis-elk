@@ -108,7 +108,7 @@ def _set_kube_config_path(conf_path: str) -> None:
 
 
 def _run_terraform_init() -> None:
-    _run_command("terraform init -var-file='variables.tfvars'")
+    _run_command("terraform init")
 
 
 def _run_terraform_plan() -> None:
