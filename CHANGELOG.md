@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.1.0-alpha.4](///compare/v3.1.0-alpha.3...v3.1.0-alpha.4) (2024-10-25)
+
+
+### Features
+
+* **atlantis.yaml:** add init steps to custom workflow 0a609f5
+* remove init steps from custom workflow in atlantis.yaml 6693fb6
+
 ## [3.1.0-alpha.3](///compare/v3.1.0-alpha.2...v3.1.0-alpha.3) (2024-10-25)
 
 
