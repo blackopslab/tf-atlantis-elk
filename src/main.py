@@ -1,7 +1,6 @@
 import sys, click
 from util.install import install_atlantis
-from util.install import run_terraform_apply
-from util.install import run_terraform_destroy
+from util.install import run_terraform_apply, run_terraform_destroy, run_terraform_init
 
 
 @click.group()
@@ -13,8 +12,8 @@ def main():
 
 
 @main.command()
-def install(verbose):
-    """Installs Atlantis from GitHub credentials provided by terraform/variables.tfvars.
+def install():
+    """Installs Atlantis from GitHub credentials provided by ./deploy/atlantis/terraform/variables.tfvars.
 
     Example:
         python main.py install
@@ -23,8 +22,18 @@ def install(verbose):
 
 
 @main.command()
-def apply(verbose):
-    """Creates all Terraform resources in ./terraform/
+def init():
+    """Initlializas all Terraform resources in ./deploy/atlantis/terraform/
+
+    Example:
+        python main.py init
+    """
+    click.echo(run_terraform_init())
+
+
+@main.command()
+def apply():
+    """Creates all Terraform resources in ./deploy/atlantis/terraform/
 
     Example:
         python main.py apply
@@ -33,8 +42,8 @@ def apply(verbose):
 
 
 @main.command()
-def destroy(verbose):
-    """Destroys all Terraform resources in ./terraform/
+def destroy():
+    """Destroys all Terraform resources in ./deploy/atlantis/terraform/
 
     Example:
         python main.py destroy

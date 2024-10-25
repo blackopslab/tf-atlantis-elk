@@ -20,7 +20,6 @@ def _change_working_directory(path: str) -> None:
     Changes the current working directory to the specified path.
     TODO: deal with permission_error
     """
-
     try:
         os.chdir(path)
         print(f"Current working directory: {os.getcwd()}")
@@ -163,6 +162,19 @@ def _install_binaries(binaries) -> None:
             raise e
 
 
+def _populate_environment() -> None:
+    print("\n1. POPULATING ENVIRONMENT...")
+    BINARIES = _map_binaries()
+    try:
+        print("Generating required directory tree...")
+        _create_directory("./bin")
+        _create_directory("./tmp")
+        _install_binaries(BINARIES)
+
+    except Exception as e:
+        raise e
+
+
 def _set_permissions(path: str, mode: str) -> None:
     """
     Sets the permissions of a file or directory to the specified mode.
@@ -182,35 +194,48 @@ def _set_kube_config_path(conf_path: str) -> None:
 
 
 def run_terraform_init() -> None:
-    _run_command("terraform init")
+    _run_command("terraform -chdir=deploy/atlantis/terraform init")
 
 
 def run_terraform_plan() -> None:
-    _run_command("terraform plan -var-file='variables.tfvars'")
+    _run_command(
+        "terraform -chdir=deploy/atlantis/terraform plan -var-file='variables.tfvars'"
+    )
 
 
 def run_terraform_apply() -> None:
-    _run_command("terraform apply -auto-approve -var-file='variables.tfvars'")
+    _run_command(
+        "terraform -chdir=deploy/atlantis/terraform apply -auto-approve -var-file='variables.tfvars'"
+    )
 
 
 def run_terraform_destroy() -> None:
-    _run_command("terraform destroy -auto-approve -var-file='variables.tfvars'")
+    _run_command(
+        "terraform -chdir=deploy/atlantis/terraform destroy -auto-approve -var-file='variables.tfvars'"
+    )
 
 
-def _populate_environment() -> None:
-    print("\n1. POPULATING ENVIRONMENT...")
-    BINARIES = _map_binaries()
-    try:
-        print("Generating required directory tree...")
-        _create_directory("./bin")
-        _create_directory("./tmp")
-        _install_binaries(BINARIES)
+def _untrack_atlantis_resources() -> None:
+    _run_command(
+        "terraform -chdir=deploy/atlantis/terraform state rm helm_release.atlantis"
+    )
+    _run_command(
+        "terraform -chdir=deploy/atlantis/terraform state rm kubernetes_namespace.atlantis"
+    )
 
-    except Exception as e:
-        raise e
+
+def _create_rbac_cluster_role() -> None:
+    """
+    Creates the RBAC role for Atlantis in the cluster. Allows cluster management from PRs.
+    """
+    _run_command("kubectl apply -f src/roles/atlantis-rbac-role.yaml")
+    _run_command("kubectl apply -f src/roles/atlantis-rbac-rb.yaml")
 
 
 def install_atlantis() -> str:
+    """
+    Installs Atlantis from GitHub credentials provided by ./deploy/atlantis/terraform/variables.tfvars.
+    """
     try:
         _populate_environment()
 
@@ -218,13 +243,17 @@ def install_atlantis() -> str:
 
         _set_kube_config_path("~/.kube/config/")
 
-        _change_working_directory("./deploy/atlantis/terraform/")
+        # _change_working_directory("./deploy/atlantis/terraform/")
 
         run_terraform_init()
         run_terraform_plan()
         run_terraform_apply()
 
-        _change_working_directory("../../../")
+        # _change_working_directory("../../../")
+
+        _create_rbac_cluster_role()
+
+        _untrack_atlantis_resources
 
     except Exception as e:
         return f"Error during installation: {e}"

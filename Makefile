@@ -38,7 +38,7 @@ install:
 	else \
 		echo "Activating the virtual environment..."; \
 		source .venv/bin/activate; \
-		python3 src/main.py install --verbose; \
+		python3 src/main.py install ; \
 		echo ""; \
 	fi
 	@echo ""
@@ -67,7 +67,7 @@ apply:
 	else \
 		echo "Activating the virtual environment..."; \
 		source .venv/bin/activate; \
-		python3 src/main.py apply --verbose; \
+		python3 src/main.py apply ; \
 		echo ""; \
 	fi
 	@echo ""
@@ -78,7 +78,7 @@ destroy:
 	else \
 		echo "Activating the virtual environment..."; \
 		source .venv/bin/activate; \
-		python3 src/main.py destroy --verbose; \
+		python3 src/main.py destroy ; \
 		echo ""; \
 	fi
 	@echo ""
