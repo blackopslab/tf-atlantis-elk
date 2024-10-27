@@ -243,13 +243,9 @@ def install_atlantis() -> str:
 
         _set_kube_config_path("~/.kube/config/")
 
-        # _change_working_directory("./deploy/atlantis/terraform/")
-
         run_terraform_init()
         run_terraform_plan()
         run_terraform_apply()
-
-        # _change_working_directory("../../../")
 
         _create_rbac_cluster_role()
 
