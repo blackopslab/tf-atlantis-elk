@@ -1,4 +1,4 @@
-import sys, click
+import sys, click, logging
 from util.install import install_atlantis
 from util.install import run_terraform_apply, run_terraform_destroy, run_terraform_init
 
