@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: help config install expose clean prune apply destroy force_rollout finalize_namespaces format alpha release
+.PHONY: help config install expose clean prune apply destroy force_rollout finalize_namespace format alpha release
 
 help:
 	@echo "Makefile Commands:"
@@ -8,10 +8,10 @@ help:
 	@echo "  expose               - Exposes to the internet using cloudflared"
 	@echo "  clean                - Remove binary files."
 	@echo "  prune                - Prune downloaded and temporary files"
-	@echo "  apply                - Applie all Terraform manifests."
+	@echo "  apply                - Apply all Terraform manifests."
 	@echo "  destroy              - Destroy all Terraform resources."
 	@echo "  force_rollout        - Destroys namespaces manually."
-	@echo "  finalize_namespaces  - Destroys namespaces stuck in terminating state"
+	@echo "  finalize_namespace  - Destroys namespaces stuck in terminating state"
 	@echo "  format               - Format Terraform files."
 	@echo "  alpha                - Generate changelog and create an alpha tag."
 	@echo "  release              - Generate changelog and create a release tag."
@@ -86,8 +86,8 @@ destroy:
 force_rollout:
 	@bash src/scripts/force_rollout.sh
 
-finalize_namespaces:
-	@bash src/scripts/force_rollout.sh
+finalize_namespace:
+	@bash src/scripts/finalize_namespace.sh atlantis
 
 format:
 	@echo "Formatting Terraform files..."
