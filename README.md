@@ -6,6 +6,9 @@
 
 ### 📋 Current Status
 
+* Added streamlined CLI Tool logging
+* Added Prometheus manifests
+* Configured custom Atlantis workflow
 * Added RBAC management to CLI Tool
 * Automated Atlantis deployment
 
@@ -13,29 +16,23 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 
 ### ⚒️ WIP
 
-* Refactor CLI tool print statements to simple logging system
-* Packaging + other chores
-
 ### 🪲 Known Bugs
+
 * [Issue 58: src/scripts/force_rollout.sh deletes ALL pvc resources from the cluster](https://github.com/blackopslab/tf-atlantis-elk/issues/58)
 
 ### 🧑‍🏭 Future Improvements
 
 * Add CLI tool tests
-* Better logging / observability
-    * opensearch
-    * opensearch dashboard
-* Cloudflared
-    * Automate execution and remind user to copy-paste to github webhook
-    * Wrap into a crd (?)
+* Cloudflared quick url wrapper (crd?) and CLI Tool integration
 
 See various inline `# TODO:` comments!
 
 ## 🫡 Requirements
 
-* Any Kubernetes distro with a `kubectl` interface (e.g. k3s, minikube, Docker Desktop on WSL2 etc.)
-* A HashiCorp cloud account
+* Any Kubernetes distro with a `kubectl` interface
+    * Tested on `k3s` and `Docker Desktop (WSL2)`
 * `terraform`
+* A HashiCorp cloud account for remote Terraform state
 * `helm`
 * `python3`
 * `pip3`
@@ -57,16 +54,11 @@ make all # -> runs clean, config, install
 ```
 
 4. Exclude Atlantis from Terraform tracking
-To avoid using multiple repositories and to prevent Atlantis to manage its own resorces, we deregister it from the remote terraform state
    ```bash
     cd deploy/atlantis/terraform
     src/scripts/untrack_atlantis_terraform.sh
    ```
-
-5. Add RBAC roles for Atlantis
-   ```
-   kubectl apply -f
-   ```
+   thus preventing it to manage its own resources, while still being able to deploy from a single repo.
 
 
 ### Expose

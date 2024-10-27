@@ -1,4 +1,13 @@
-import os, subprocess, shlex
+import os, subprocess, shlex, logging
+
+# Map local logger
+_log = logging.getLogger(__name__)
+_root_logger = logging.getLogger()
+_root_logger.setLevel(logging.INFO)
+_console_handler = logging.StreamHandler()
+_console_handler.setLevel(logging.INFO)
+_root_logger.addHandler(_console_handler)
+
 from typing import List, Tuple
 
 
@@ -13,27 +22,6 @@ def _run_command(command: str) -> str:
         raise RuntimeError(
             f"Command '{command}' failed with error: {called_process_error.output.decode('utf-8')}"
         )
-
-
-def _change_working_directory(path: str) -> None:
-    """
-    Changes the current working directory to the specified path.
-    TODO: deal with permission_error
-    """
-    try:
-        os.chdir(path)
-        print(f"Current working directory: {os.getcwd()}")
-
-    except FileNotFoundError as file_not_found_error:
-        print(f"Directory {path} not found.")
-        raise file_not_found_error
-
-    except NotADirectoryError as not_a_directory_error:
-        print(f"{path} is not a directory.")
-        raise not_a_directory_error
-
-    except PermissionError as permission_error:
-        raise RuntimeError(f"Permission denied to access {path}: {permission_error}")
 
 
 def _create_directory(path: str) -> None:
@@ -54,7 +42,7 @@ def _download_binary(url: str, output_path: str) -> None:
     """
     try:
         if os.path.exists(output_path):
-            print(f"{output_path} already exists!")
+            _log.info(f"{output_path} already exists!")
             return
         else:
             _run_command(f"wget {url} -O {output_path}")
@@ -112,15 +100,15 @@ def _match_and_extract(name: str, temp_path: str, install_path: str) -> None:
 
         match file_extension:
             case ".gz":
-                print(f"Extracting {name} binary from tar.gz...")
+                _log.info(f"Extracting {name} binary from tar.gz...")
                 _untar_binary(temp_path, install_path)
             case ".zip":
-                print(f"Extracting {name} binary from zip...")
+                _log.info(f"Extracting {name} binary from zip...")
                 _unzip_binary(temp_path, install_path)
             case "":
-                print(f"No extension for {name}. Skipping extraction.")
+                _log.info(f"No extension for {name}. Skipping extraction.")
             case _:
-                print(f"Unknown file type for {name}.")
+                _log.info(f"Unknown file type for {name}.")
 
     except OSError as e:
         raise RuntimeError(f"Failed to extract {name} binary: {e}")
@@ -147,26 +135,26 @@ def _install_binaries(binaries) -> None:
     """
     for name, url, temp_path, install_path, permissions in binaries:
         try:
-            print(f"Downloading {name} binary...")
+            _log.info(f"Downloading {name} binary...")
             _download_binary(url, temp_path)
             _match_and_extract(name, temp_path, install_path)
             _set_permissions(install_path, permissions)
 
         except RuntimeError as e:
-            print(f"Error downloading {name} binary.")
-            print(f"URL {url} does not respond!")
+            _log.info(f"Error downloading {name} binary.")
+            _log.info(f"URL {url} does not respond!")
             raise e
 
         except Exception as e:
-            print(f"Unexpected error installing {name} binary.")
+            _log.info(f"Unexpected error installing {name} binary.")
             raise e
 
 
 def _populate_environment() -> None:
-    print("\n1. POPULATING ENVIRONMENT...")
+    _log.info("\n1. POPULATING ENVIRONMENT...")
     BINARIES = _map_binaries()
     try:
-        print("Generating required directory tree...")
+        _log.info("Generating required directory tree...")
         _create_directory("./bin")
         _create_directory("./tmp")
         _install_binaries(BINARIES)
@@ -239,17 +227,13 @@ def install_atlantis() -> str:
     try:
         _populate_environment()
 
-        print("\n2. INSTALLING...")
+        _log.info("\n2. INSTALLING...")
 
         _set_kube_config_path("~/.kube/config/")
-
-        # _change_working_directory("./deploy/atlantis/terraform/")
 
         run_terraform_init()
         run_terraform_plan()
         run_terraform_apply()
-
-        # _change_working_directory("../../../")
 
         _create_rbac_cluster_role()
 
