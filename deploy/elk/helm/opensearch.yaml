@@ -259,7 +259,7 @@ security:
       ## @param security.tls.master.keyKey Key containing the key for master nodes certificate (defaults to tls.key)
       ## @param security.tls.master.caKey Key containing the ca for master nodes certificate (defaults to ca.crt)
       ##
-      existingSecret: ""
+      existingSecret: "os-masterkey"
       certKey: ""
       keyKey: ""
       caKey: ""
