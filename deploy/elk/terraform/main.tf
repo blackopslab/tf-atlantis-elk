@@ -16,7 +16,7 @@ resource "helm_release" "opensearch" {
 resource "helm_release" "prometheus" {
   name       = "prometheus"
   repository = "https://charts.bitnami.com/bitnami"
-  chart      = "prometheus"
+  chart      = "kube-prometheus"
   namespace  = "monitoring"
 
   values = [file("${path.module}/../helm/prometheus.yaml")]
