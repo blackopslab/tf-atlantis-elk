@@ -2770,7 +2770,7 @@ sysctlImage:
 dashboards:
   ## @param dashboards.enabled Enables OpenSearch Dashboards deployment
   ##
-  enabled: false
+  enabled: true
   ## Bitnami OpenSearch Dashboards image
   ## @param dashboards.image.registry [default: REGISTRY_NAME] OpenSearch Dashboards image registry
   ## @param dashboards.image.repository [default: REPOSITORY_NAME/opensearch-dashboards] OpenSearch Dashboards image repository
