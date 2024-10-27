@@ -58,7 +58,7 @@ def version():
     Example:
         python main.py version
     """
-    click.echo("tf-atlantis-cli version: 4.0.0")
+    click.echo("tf-atlantis-cli version: 4.1.0")
 
 
 if __name__ == "__main__":
