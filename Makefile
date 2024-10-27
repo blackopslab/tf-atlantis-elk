@@ -87,7 +87,7 @@ force_rollout:
 	@bash src/scripts/force_rollout.sh
 
 finalize_namespaces:
-	@bash src/scripts/force_rollout.sh
+	@bash src/scripts/finalize_namespaces.sh atlantis
 
 format:
 	@echo "Formatting Terraform files..."
