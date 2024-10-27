@@ -7,33 +7,34 @@
 ### 📋 Current Status
 
 * Added RBAC management to CLI Tool
-* Working Atlantis Deployments
-* Atlantis up /w remote state
-* Cluster exposed to the internet
-* Added cloudflare quick tunnel
-* Added Makefile & Atlantis Helm Chart
-* Added CLI tool to manage installation
+* Automated Atlantis deployment
 
 For details, see [CHANGELOG.md](CHANGELOG.md)
 
 ### ⚒️ WIP
 
-### 🪲 Known Bugs
+* Refactor CLI tool print statements to simple logging system
+* Packaging + other chores
 
+### 🪲 Known Bugs
+* [Issue 58: src/scripts/force_rollout.sh deletes ALL pvc resources from the cluster](https://github.com/blackopslab/tf-atlantis-elk/issues/58)
 
 ### 🧑‍🏭 Future Improvements
 
-* Add CLI tool logging instead of print statements
 * Add CLI tool tests
+* Better logging / observability
+    * opensearch
+    * opensearch dashboard
 * Cloudflared
     * Automate execution and remind user to copy-paste to github webhook
-    * Wrap into a crd
+    * Wrap into a crd (?)
 
 See various inline `# TODO:` comments!
 
 ## 🫡 Requirements
 
 * Any Kubernetes distro with a `kubectl` interface (e.g. k3s, minikube, Docker Desktop on WSL2 etc.)
+* A HashiCorp cloud account
 * `terraform`
 * `helm`
 * `python3`
@@ -54,10 +55,9 @@ See various inline `# TODO:` comments!
 ```bash
 make all # -> runs clean, config, install
 ```
-Note: `make all` consists of `make clean | config | install`. See Makefile.
-
 
 4. Exclude Atlantis from Terraform tracking
+To avoid using multiple repositories and to prevent Atlantis to manage its own resorces, we deregister it from the remote terraform state
    ```bash
     cd deploy/atlantis/terraform
     src/scripts/untrack_atlantis_terraform.sh
