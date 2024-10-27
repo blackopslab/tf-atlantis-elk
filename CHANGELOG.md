@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.3.0](///compare/v3.2.0...v3.3.0) (2024-10-27)
+
+
+### Features
+
+* install monitoring tools 21191df
+* **terraform:** add cloud configuration to main.tf 5f10f50
+* update atlantisUrl in helm values 93caf53
+* update project name and prometheus chart in terraform config b5f84f3
+
 ## [3.2.0](///compare/v3.1.0...v3.2.0) (2024-10-25)
 
 
