@@ -143,11 +143,11 @@ server:
   ##
   ## You MUST also set namespaces to the ones you have access to and want monitored by Prometheus.
   ##
-  # useExistingClusterRoleName: nameofclusterrole
+  useExistingClusterRoleName: atlantis
 
   ## If set it will override prometheus.server.fullname value for ClusterRole and ClusterRoleBinding
   ##
-  clusterRoleNameOverride: ""
+  clusterRoleNameOverride: "atlantis"
 
   # Enable only the release namespace for monitoring. By default all namespaces are monitored.
   # If releaseNamespace and namespaces are both set a merged list will be monitored.
@@ -1237,7 +1237,7 @@ networkPolicy:
   enabled: false
 
 # Force namespace of namespaced resources
-forceNamespace: ""
+forceNamespace: "monitoring"
 
 # Extra manifests to deploy as an array
 extraManifests: []
