@@ -260,8 +260,8 @@ security:
       ## @param security.tls.master.caKey Key containing the ca for master nodes certificate (defaults to ca.crt)
       ##
       existingSecret: "os-masterkey"
-      certKey: ""
-      keyKey: ""
+      certKey: "tls.crt"
+      keyKey: "tls.key"
       caKey: ""
     ## TLS configuration for data nodes
     ##
