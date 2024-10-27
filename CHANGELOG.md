@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.4.0](///compare/v3.3.0...v3.4.0) (2024-10-27)
+
+
+### Features
+
+* **opensearch.yaml:** enable OpenSearch Dashboards deployment bc40d63
+
 ## [3.3.0](///compare/v3.2.0...v3.3.0) (2024-10-27)
 
 

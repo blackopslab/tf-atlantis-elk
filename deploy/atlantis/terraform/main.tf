@@ -6,6 +6,7 @@ terraform {
     }
   }
 }
+
 resource "kubernetes_namespace" "atlantis" {
   metadata {
     name = "atlantis"
@@ -15,7 +16,6 @@ resource "kubernetes_namespace" "atlantis" {
     ignore_changes  = all
   }
 }
-
 
 resource "helm_release" "atlantis" {
   name       = "atlantis"

@@ -18,18 +18,12 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 
 ### ⚒️ WIP
 
-* Deploying monitoring solution
-    * Prometheus
-    * Opensearch
-    * Kibana
-    * Bonus: logstash
-
 ### 🪲 Known Bugs
 
 
 ### 🧑‍🏭 Future Improvements
 
-* Add logging
+* Add CLI tool logging instead of print statements
 * Add CLI tool tests
 * Cloudflared
     * Automate execution and remind user to copy-paste to github webhook

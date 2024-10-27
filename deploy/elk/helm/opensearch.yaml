@@ -259,9 +259,9 @@ security:
       ## @param security.tls.master.keyKey Key containing the key for master nodes certificate (defaults to tls.key)
       ## @param security.tls.master.caKey Key containing the ca for master nodes certificate (defaults to ca.crt)
       ##
-      existingSecret: ""
-      certKey: ""
-      keyKey: ""
+      existingSecret: "os-masterkey"
+      certKey: "tls.crt"
+      keyKey: "tls.key"
       caKey: ""
     ## TLS configuration for data nodes
     ##
@@ -2770,7 +2770,7 @@ sysctlImage:
 dashboards:
   ## @param dashboards.enabled Enables OpenSearch Dashboards deployment
   ##
-  enabled: false
+  enabled: true
   ## Bitnami OpenSearch Dashboards image
   ## @param dashboards.image.registry [default: REGISTRY_NAME] OpenSearch Dashboards image registry
   ## @param dashboards.image.repository [default: REPOSITORY_NAME/opensearch-dashboards] OpenSearch Dashboards image repository
