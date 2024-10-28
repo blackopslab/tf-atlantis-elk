@@ -1,5 +1,5 @@
 #!/bin/bash
-helm uninstall opensearch -n monitoring &&
+helm uninstall prometheus -n monitoring &&
 helm uninstall atlantis -n atlantis &&
 kubectl delete pvc --all -n monitoring &
 kubectl delete pvc --all -n atlantis &
