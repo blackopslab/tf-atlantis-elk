@@ -22,6 +22,10 @@ def _run_command(command: str) -> str:
         raise RuntimeError(
             f"Command '{command}' failed with error: {called_process_error.output.decode('utf-8')}"
         )
+    except FileNotFoundError as file_not_found_error:
+        raise RuntimeError(
+            f"Command '{command}' failed with error: {file_not_found_error.strerror}"
+        )
 
 
 def _create_directory(path: str) -> None:
