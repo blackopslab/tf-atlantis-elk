@@ -16,13 +16,14 @@ For details, see [CHANGELOG.md](CHANGELOG.md)
 
 ### ⚒️ WIP
 
+* Writing unit tests for CLI tool
+
 ### 🪲 Known Bugs
 
 * [Issue 58: src/scripts/force_rollout.sh deletes ALL pvc resources from the cluster](https://github.com/blackopslab/tf-atlantis-elk/issues/58)
 
 ### 🧑‍🏭 Future Improvements
 
-* Add CLI tool tests
 * Cloudflared quick url wrapper (crd?) and CLI Tool integration
 
 See various inline `# TODO:` comments!
