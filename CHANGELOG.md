@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.3.2](///compare/v3.3.1...v3.3.2) (2024-10-29)
+
+
+### Features
+
+* Add pytest configuration and requirements c2d8f57
+* **docs:** update Work in Progress and Future Improvements sections 42cf39b
+* **scripts:** update force_rollout.sh to uninstall Prometheus 370808f
+* **tests:** tests/test_run_command.py 069feea
+
 ## [3.3.1](///compare/v3.3.1-alpha.0...v3.3.1) (2024-10-27)
 
 ## [3.3.1-alpha.0](///compare/v3.3.0...v3.3.1-alpha.0) (2024-10-27)
